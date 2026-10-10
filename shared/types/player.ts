@@ -10,12 +10,10 @@ export type Player = {
 
 export type TrackedPlayer = {
     id: string;
-
-    espnId?: string;
+    espnId: string;
 
     firstName: string;
     lastName: string;
-
     position: string;
     team: Team;
 };

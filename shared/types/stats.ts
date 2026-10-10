@@ -1,5 +1,7 @@
 import type { Team } from "./team";
 
+export type SeasonPhase = "regular" | "postseason";
+
 export type SeasonStats = {
     playerId: string;
     season: string;
@@ -22,17 +24,25 @@ export type SeasonStats = {
 };
 
 export type GamePerformance = {
-    gameId: string;
+    id: string;
     playerId: string;
+
+    espnEventId: string;
+
+    seasonEndYear: number;
+    phase: SeasonPhase;
 
     date: string;
 
+    playerTeam: Team;
     opponent: Team;
+    isHome: boolean;
 
     minutes: number;
 
     fgm: number;
     fga: number;
+
     ftm: number;
     fta: number;
 

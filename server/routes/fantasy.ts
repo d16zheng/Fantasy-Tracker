@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getFantasyRoster } from "../services/fantasyRosterService";
+import { createTrackedPlayers } from "../services/trackedPlayerService";
 
 const router = Router();
 
@@ -32,11 +33,7 @@ router.get("/roster", async (req, res) => {
 
 router.post("/import", async (req, res) => {
     try{
-        const {
-            leagueId,
-            teamId,
-            seasonId,
-        } = req.body;
+        const {leagueId, teamId, seasonId,} = req.body;
     
         if (!leagueId || !teamId || !seasonId) {
             return res.status(400).json({
@@ -51,8 +48,10 @@ router.post("/import", async (req, res) => {
         };
 
         const roster = await getFantasyRoster(fantasyTeam);
-        // Import currently retrieves the roster only; persistence and stats come later.
-        res.json(roster);
+
+        const players = createTrackedPlayers(roster);
+
+        res.json(players);
     } catch (error) {
         console.error("Failed to import fantasy roster:", error);
         res.status(500).json({
