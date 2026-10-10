@@ -12,7 +12,6 @@ export type TrackedPlayer = {
     id: string;
 
     espnId?: string;
-    bdlId: number;
 
     firstName: string;
     lastName: string;

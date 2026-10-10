@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { getFantasyRoster } from "../services/fantasyRosterService";
-import { matchRosterPlayers } from "../services/playerMatchingService";
 
 const router = Router();
 
@@ -52,9 +51,8 @@ router.post("/import", async (req, res) => {
         };
 
         const roster = await getFantasyRoster(fantasyTeam);
-        const result = await matchRosterPlayers(roster);
-        
-        res.json(result);
+        // Import currently retrieves the roster only; persistence and stats come later.
+        res.json(roster);
     } catch (error) {
         console.error("Failed to import fantasy roster:", error);
         res.status(500).json({
