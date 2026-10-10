@@ -64,6 +64,6 @@ export function mapEspnPlayer(
         lastName: player.lastName ?? "",
 
         position: mapEspnPosition(player.defaultPositionId),
-        nbaTeamAbbreviation: mapEspnTeam(player.teamId),
+        nbaTeamAbbreviation: mapEspnTeam(player.proTeamId),
     };
 }

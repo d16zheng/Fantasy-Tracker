@@ -1,4 +1,4 @@
-import type {Team} from "./team"
+import type { Team } from "./team";
 
 export type SeasonStats = {
     playerId: string;
@@ -19,7 +19,7 @@ export type SeasonStats = {
     topg: number;
 
     ppg: number;
-}
+};
 
 export type GamePerformance = {
     gameId: string;
@@ -45,4 +45,4 @@ export type GamePerformance = {
     blocks: number;
     to: number;
     points: number;
-}
+};

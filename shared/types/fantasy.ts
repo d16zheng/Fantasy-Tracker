@@ -1,3 +1,5 @@
+import type { TrackedPlayer } from "./player";
+
 export interface EspnFantasyTeam {
   leagueId: string | number;
   teamId: string | number;
@@ -13,4 +15,9 @@ export type EspnRosterPlayer = {
     position?: string;
     nbaTeamAbbreviation?: string;
 
+};
+
+export type PlayerMatchResult = {
+  matched: TrackedPlayer[];
+  unmatched: EspnRosterPlayer[];
 };

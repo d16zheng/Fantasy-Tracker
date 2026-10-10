@@ -1,10 +1,11 @@
 import type { EspnFantasyTeam } from '../../../shared/types/fantasy';
+import type { EspnRosterResponse } from './types';
 
 const ESPN_FANTASY_BASE_URL = "https://lm-api-reads.fantasy.espn.com/apis/v3";
 
 export async function fetchEspnRoster(
     fantasyTeam: EspnFantasyTeam
-) {
+): Promise<EspnRosterResponse> {
     const { leagueId, teamId, seasonId} = fantasyTeam;
 
     const url = 
@@ -17,6 +18,10 @@ export async function fetchEspnRoster(
     const response = await fetch(url, {
         headers: {
             Accept: "application/json",
+            Cookie: [
+                `SWID=${process.env.ESPN_SWID ?? ""}`,
+                `espn_s2=${process.env.ESPN_S2 ?? ""}`,
+            ].join("; "),
         },
     });
 
@@ -26,6 +31,5 @@ export async function fetchEspnRoster(
         );
     }
 
-    return response.json()
+    return (await response.json()) as EspnRosterResponse;
 }
-

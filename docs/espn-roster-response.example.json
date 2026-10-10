@@ -1,0 +1,97 @@
+{
+  "draftDetail": {
+    "drafted": true,
+    "inProgress": false
+  },
+  "gameId": 3,
+  "id": 1428686661,
+  "scoringPeriodId": 175,
+  "seasonId": 2026,
+  "segmentId": 0,
+  "status": {
+    "isActive": true,
+    "isFull": true,
+    "currentMatchupPeriod": 21
+  },
+  "teams": [
+    {
+      "id": 1
+    },
+    {
+      "id": 5,
+      "roster": {
+        "entries": [
+          {
+            "acquisitionDate": 1760320433369,
+            "acquisitionType": "DRAFT",
+            "injuryStatus": "NORMAL",
+            "lineupSlotId": 4,
+            "playerId": 3112335,
+            "playerPoolEntry": {
+              "id": 3112335,
+              "onTeamId": 5,
+              "status": "ONTEAM",
+              "player": {
+                "active": true,
+                "defaultPositionId": 5,
+                "eligibleSlots": [4, 9, 10, 11, 12, 13],
+                "firstName": "Nikola",
+                "fullName": "Nikola Jokic",
+                "id": 3112335,
+                "injured": false,
+                "injuryStatus": "ACTIVE",
+                "lastName": "Jokic",
+                "proTeamId": 7,
+                "stats": [
+                  {
+                    "id": "002026",
+                    "seasonId": 2026,
+                    "stats": {
+                      "0": 1799,
+                      "3": 697,
+                      "6": 836,
+                      "13": 644,
+                      "14": 1132,
+                      "23": 488
+                    }
+                  }
+                ]
+              }
+            },
+            "status": "NORMAL"
+          },
+          {
+            "acquisitionDate": 1760320433369,
+            "acquisitionType": "DRAFT",
+            "injuryStatus": "NORMAL",
+            "lineupSlotId": 0,
+            "playerId": 4066354,
+            "playerPoolEntry": {
+              "id": 4066354,
+              "onTeamId": 5,
+              "status": "ONTEAM",
+              "player": {
+                "active": true,
+                "defaultPositionId": 1,
+                "eligibleSlots": [0, 5, 8, 11, 12, 13],
+                "firstName": "Payton",
+                "fullName": "Payton Pritchard",
+                "id": 4066354,
+                "injured": false,
+                "injuryStatus": "ACTIVE",
+                "lastName": "Pritchard",
+                "proTeamId": 2,
+                "stats": []
+              }
+            },
+            "status": "NORMAL"
+          }
+        ],
+        "tradeReservedEntries": 0
+      }
+    },
+    {
+      "id": 6
+    }
+  ]
+}
