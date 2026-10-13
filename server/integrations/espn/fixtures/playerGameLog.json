@@ -1,0 +1,3071 @@
+{
+  "names": [
+    "minutes",
+    "fieldGoalsMade-fieldGoalsAttempted",
+    "fieldGoalPct",
+    "threePointFieldGoalsMade-threePointFieldGoalsAttempted",
+    "threePointPct",
+    "freeThrowsMade-freeThrowsAttempted",
+    "freeThrowPct",
+    "totalRebounds",
+    "assists",
+    "blocks",
+    "steals",
+    "fouls",
+    "turnovers",
+    "points"
+  ],
+  "events": {
+    "401703402": {
+      "id": "401703402",
+      "gameDate": "2024-11-23T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "6",
+        "abbreviation": "DAL"
+      },
+      "gameResult": "L"
+    },
+    "401703427": {
+      "id": "401703427",
+      "gameDate": "2024-12-04T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "9",
+        "abbreviation": "GS"
+      },
+      "gameResult": "W"
+    },
+    "401704641": {
+      "id": "401704641",
+      "gameDate": "2024-10-25T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    },
+    "401704653": {
+      "id": "401704653",
+      "gameDate": "2024-10-26T21:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "L"
+    },
+    "401704673": {
+      "id": "401704673",
+      "gameDate": "2024-10-28T23:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "28",
+        "abbreviation": "TOR"
+      },
+      "gameResult": "W"
+    },
+    "401704679": {
+      "id": "401704679",
+      "gameDate": "2024-10-29T23:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "17",
+        "abbreviation": "BKN"
+      },
+      "gameResult": "W"
+    },
+    "401704705": {
+      "id": "401704705",
+      "gameDate": "2024-11-02T01:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "16",
+        "abbreviation": "MIN"
+      },
+      "gameResult": "L"
+    },
+    "401704714": {
+      "id": "401704714",
+      "gameDate": "2024-11-03T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "26",
+        "abbreviation": "UTAH"
+      },
+      "gameResult": "W"
+    },
+    "401704732": {
+      "id": "401704732",
+      "gameDate": "2024-11-05T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "28",
+        "abbreviation": "TOR"
+      },
+      "gameResult": "W"
+    },
+    "401704743": {
+      "id": "401704743",
+      "gameDate": "2024-11-07T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "W"
+    },
+    "401704760": {
+      "id": "401704760",
+      "gameDate": "2024-11-09T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "14",
+        "abbreviation": "MIA"
+      },
+      "gameResult": "W"
+    },
+    "401704774": {
+      "id": "401704774",
+      "gameDate": "2024-11-11T01:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "6",
+        "abbreviation": "DAL"
+      },
+      "gameResult": "W"
+    },
+    "401704836": {
+      "id": "401704836",
+      "gameDate": "2024-11-24T03:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "13",
+        "abbreviation": "LAL"
+      },
+      "gameResult": "W"
+    },
+    "401704849": {
+      "id": "401704849",
+      "gameDate": "2024-11-26T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "18",
+        "abbreviation": "NY"
+      },
+      "gameResult": "L"
+    },
+    "401704864": {
+      "id": "401704864",
+      "gameDate": "2024-11-28T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "26",
+        "abbreviation": "UTAH"
+      },
+      "gameResult": "W"
+    },
+    "401704880": {
+      "id": "401704880",
+      "gameDate": "2024-12-02T03:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "L"
+    },
+    "401704891": {
+      "id": "401704891",
+      "gameDate": "2024-12-06T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "5",
+        "abbreviation": "CLE"
+      },
+      "gameResult": "L"
+    },
+    "401704907": {
+      "id": "401704907",
+      "gameDate": "2024-12-08T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "27",
+        "abbreviation": "WSH"
+      },
+      "gameResult": "L"
+    },
+    "401704916": {
+      "id": "401704916",
+      "gameDate": "2024-12-08T23:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "1",
+        "abbreviation": "ATL"
+      },
+      "gameResult": "W"
+    },
+    "401704937": {
+      "id": "401704937",
+      "gameDate": "2024-12-20T03:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "22",
+        "abbreviation": "POR"
+      },
+      "gameResult": "L"
+    },
+    "401704956": {
+      "id": "401704956",
+      "gameDate": "2024-12-23T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "3",
+        "abbreviation": "NO"
+      },
+      "gameResult": "W"
+    },
+    "401704968": {
+      "id": "401704968",
+      "gameDate": "2024-12-24T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "21",
+        "abbreviation": "PHX"
+      },
+      "gameResult": "W"
+    },
+    "401704975": {
+      "id": "401704975",
+      "gameDate": "2024-12-26T03:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "21",
+        "abbreviation": "PHX"
+      },
+      "gameResult": "L"
+    },
+    "401704990": {
+      "id": "401704990",
+      "gameDate": "2024-12-28T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "5",
+        "abbreviation": "CLE"
+      },
+      "gameResult": "L"
+    },
+    "401704998": {
+      "id": "401704998",
+      "gameDate": "2024-12-29T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "8",
+        "abbreviation": "DET"
+      },
+      "gameResult": "W"
+    },
+    "401705011": {
+      "id": "401705011",
+      "gameDate": "2024-12-31T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "26",
+        "abbreviation": "UTAH"
+      },
+      "gameResult": "W"
+    },
+    "401705027": {
+      "id": "401705027",
+      "gameDate": "2025-01-02T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "1",
+        "abbreviation": "ATL"
+      },
+      "gameResult": "W"
+    },
+    "401705041": {
+      "id": "401705041",
+      "gameDate": "2025-01-04T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "24",
+        "abbreviation": "SA"
+      },
+      "gameResult": "L"
+    },
+    "401705050": {
+      "id": "401705050",
+      "gameDate": "2025-01-05T01:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "24",
+        "abbreviation": "SA"
+      },
+      "gameResult": "W"
+    },
+    "401705097": {
+      "id": "401705097",
+      "gameDate": "2025-01-11T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "17",
+        "abbreviation": "BKN"
+      },
+      "gameResult": "W"
+    },
+    "401705106": {
+      "id": "401705106",
+      "gameDate": "2025-01-12T20:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "6",
+        "abbreviation": "DAL"
+      },
+      "gameResult": "W"
+    },
+    "401705125": {
+      "id": "401705125",
+      "gameDate": "2025-01-15T02:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "6",
+        "abbreviation": "DAL"
+      },
+      "gameResult": "W"
+    },
+    "401705145": {
+      "id": "401705145",
+      "gameDate": "2025-01-18T01:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "14",
+        "abbreviation": "MIA"
+      },
+      "gameResult": "W"
+    },
+    "401705159": {
+      "id": "401705159",
+      "gameDate": "2025-01-19T23:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "19",
+        "abbreviation": "ORL"
+      },
+      "gameResult": "W"
+    },
+    "401705175": {
+      "id": "401705175",
+      "gameDate": "2025-01-22T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "20",
+        "abbreviation": "PHI"
+      },
+      "gameResult": "W"
+    },
+    "401705192": {
+      "id": "401705192",
+      "gameDate": "2025-01-24T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "23",
+        "abbreviation": "SAC"
+      },
+      "gameResult": "W"
+    },
+    "401705200": {
+      "id": "401705200",
+      "gameDate": "2025-01-25T20:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "16",
+        "abbreviation": "MIN"
+      },
+      "gameResult": "L"
+    },
+    "401705221": {
+      "id": "401705221",
+      "gameDate": "2025-01-28T01:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "4",
+        "abbreviation": "CHI"
+      },
+      "gameResult": "L"
+    },
+    "401705234": {
+      "id": "401705234",
+      "gameDate": "2025-01-30T00:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "18",
+        "abbreviation": "NY"
+      },
+      "gameResult": "L"
+    },
+    "401705247": {
+      "id": "401705247",
+      "gameDate": "2025-02-01T00:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "20",
+        "abbreviation": "PHI"
+      },
+      "gameResult": "W"
+    },
+    "401705254": {
+      "id": "401705254",
+      "gameDate": "2025-02-02T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "30",
+        "abbreviation": "CHA"
+      },
+      "gameResult": "W"
+    },
+    "401705272": {
+      "id": "401705272",
+      "gameDate": "2025-02-04T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "3",
+        "abbreviation": "NO"
+      },
+      "gameResult": "W"
+    },
+    "401705292": {
+      "id": "401705292",
+      "gameDate": "2025-02-06T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "3",
+        "abbreviation": "NO"
+      },
+      "gameResult": "W"
+    },
+    "401705296": {
+      "id": "401705296",
+      "gameDate": "2025-02-07T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "19",
+        "abbreviation": "ORL"
+      },
+      "gameResult": "W"
+    },
+    "401705315": {
+      "id": "401705315",
+      "gameDate": "2025-02-09T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "21",
+        "abbreviation": "PHX"
+      },
+      "gameResult": "W"
+    },
+    "401705329": {
+      "id": "401705329",
+      "gameDate": "2025-02-11T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "22",
+        "abbreviation": "POR"
+      },
+      "gameResult": "W"
+    },
+    "401705346": {
+      "id": "401705346",
+      "gameDate": "2025-02-13T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "22",
+        "abbreviation": "POR"
+      },
+      "gameResult": "W"
+    },
+    "401705360": {
+      "id": "401705360",
+      "gameDate": "2025-02-21T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "30",
+        "abbreviation": "CHA"
+      },
+      "gameResult": "W"
+    },
+    "401705374": {
+      "id": "401705374",
+      "gameDate": "2025-02-23T01:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "13",
+        "abbreviation": "LAL"
+      },
+      "gameResult": "L"
+    },
+    "401705388": {
+      "id": "401705388",
+      "gameDate": "2025-02-25T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "11",
+        "abbreviation": "IND"
+      },
+      "gameResult": "W"
+    },
+    "401705412": {
+      "id": "401705412",
+      "gameDate": "2025-02-28T01:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "15",
+        "abbreviation": "MIL"
+      },
+      "gameResult": "L"
+    },
+    "401705416": {
+      "id": "401705416",
+      "gameDate": "2025-03-01T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "8",
+        "abbreviation": "DET"
+      },
+      "gameResult": "W"
+    },
+    "401705432": {
+      "id": "401705432",
+      "gameDate": "2025-03-02T18:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "2",
+        "abbreviation": "BOS"
+      },
+      "gameResult": "L"
+    },
+    "401705462": {
+      "id": "401705462",
+      "gameDate": "2025-03-06T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "23",
+        "abbreviation": "SAC"
+      },
+      "gameResult": "W"
+    },
+    "401705475": {
+      "id": "401705475",
+      "gameDate": "2025-03-08T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "21",
+        "abbreviation": "PHX"
+      },
+      "gameResult": "W"
+    },
+    "401705486": {
+      "id": "401705486",
+      "gameDate": "2025-03-09T17:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    },
+    "401705502": {
+      "id": "401705502",
+      "gameDate": "2025-03-11T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "W"
+    },
+    "401705518": {
+      "id": "401705518",
+      "gameDate": "2025-03-13T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "16",
+        "abbreviation": "MIN"
+      },
+      "gameResult": "L"
+    },
+    "401705531": {
+      "id": "401705531",
+      "gameDate": "2025-03-15T01:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "13",
+        "abbreviation": "LAL"
+      },
+      "gameResult": "W"
+    },
+    "401705541": {
+      "id": "401705541",
+      "gameDate": "2025-03-16T01:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "27",
+        "abbreviation": "WSH"
+      },
+      "gameResult": "L"
+    },
+    "401705623": {
+      "id": "401705623",
+      "gameDate": "2025-03-27T01:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "15",
+        "abbreviation": "MIL"
+      },
+      "gameResult": "W"
+    },
+    "401705639": {
+      "id": "401705639",
+      "gameDate": "2025-03-29T01:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "26",
+        "abbreviation": "UTAH"
+      },
+      "gameResult": "W"
+    },
+    "401705668": {
+      "id": "401705668",
+      "gameDate": "2025-04-02T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "16",
+        "abbreviation": "MIN"
+      },
+      "gameResult": "L"
+    },
+    "401705691": {
+      "id": "401705691",
+      "gameDate": "2025-04-05T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "9",
+        "abbreviation": "GS"
+      },
+      "gameResult": "L"
+    },
+    "401705708": {
+      "id": "401705708",
+      "gameDate": "2025-04-07T00:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "11",
+        "abbreviation": "IND"
+      },
+      "gameResult": "L"
+    },
+    "401705731": {
+      "id": "401705731",
+      "gameDate": "2025-04-10T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "23",
+        "abbreviation": "SAC"
+      },
+      "gameResult": "W"
+    },
+    "401705746": {
+      "id": "401705746",
+      "gameDate": "2025-04-12T01:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "29",
+        "abbreviation": "MEM"
+      },
+      "gameResult": "W"
+    },
+    "401705759": {
+      "id": "401705759",
+      "gameDate": "2025-04-13T19:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "10",
+        "abbreviation": "HOU"
+      },
+      "gameResult": "W"
+    },
+    "401716947": {
+      "id": "401716947",
+      "gameDate": "2024-10-04T16:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "2",
+        "abbreviation": "BOS"
+      },
+      "gameResult": "L"
+    },
+    "401716951": {
+      "id": "401716951",
+      "gameDate": "2024-10-06T14:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "2",
+        "abbreviation": "BOS"
+      },
+      "gameResult": "L"
+    },
+    "401716995": {
+      "id": "401716995",
+      "gameDate": "2024-10-14T00:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "21",
+        "abbreviation": "PHX"
+      },
+      "gameResult": "L"
+    },
+    "401717024": {
+      "id": "401717024",
+      "gameDate": "2024-10-18T00:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "16",
+        "abbreviation": "MIN"
+      },
+      "gameResult": "W"
+    },
+    "401736807": {
+      "id": "401736807",
+      "gameDate": "2024-12-14T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "W"
+    },
+    "401736819": {
+      "id": "401736819",
+      "gameDate": "2024-12-17T03:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "23",
+        "abbreviation": "SAC"
+      },
+      "gameResult": "W"
+    },
+    "401752955": {
+      "id": "401752955",
+      "gameDate": "2025-02-17T01:20:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "130579",
+        "abbreviation": "CHK"
+      },
+      "opponent": {
+        "id": "130581",
+        "abbreviation": "KEN"
+      },
+      "gameResult": "W"
+    },
+    "401752957": {
+      "id": "401752957",
+      "gameDate": "2025-02-17T03:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "130579",
+        "abbreviation": "CHK"
+      },
+      "opponent": {
+        "id": "130580",
+        "abbreviation": "SHQ"
+      },
+      "gameResult": "L"
+    },
+    "401767819": {
+      "id": "401767819",
+      "gameDate": "2025-04-19T19:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "W"
+    },
+    "401768061": {
+      "id": "401768061",
+      "gameDate": "2025-04-22T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "L"
+    },
+    "401768062": {
+      "id": "401768062",
+      "gameDate": "2025-04-25T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "L"
+    },
+    "401768063": {
+      "id": "401768063",
+      "gameDate": "2025-04-26T22:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "W"
+    },
+    "401768064": {
+      "id": "401768064",
+      "gameDate": "2025-04-30T02:00:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "W"
+    },
+    "401768065": {
+      "id": "401768065",
+      "gameDate": "2025-05-02T02:00:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "L"
+    },
+    "401768066": {
+      "id": "401768066",
+      "gameDate": "2025-05-03T23:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "12",
+        "abbreviation": "LAC"
+      },
+      "gameResult": "W"
+    },
+    "401769820": {
+      "id": "401769820",
+      "gameDate": "2025-05-06T01:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "W"
+    },
+    "401769821": {
+      "id": "401769821",
+      "gameDate": "2025-05-08T01:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    },
+    "401769822": {
+      "id": "401769822",
+      "gameDate": "2025-05-10T02:25:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "W"
+    },
+    "401769823": {
+      "id": "401769823",
+      "gameDate": "2025-05-11T19:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    },
+    "401769990": {
+      "id": "401769990",
+      "gameDate": "2025-05-14T01:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    },
+    "401769991": {
+      "id": "401769991",
+      "gameDate": "2025-05-16T00:30:00.000+00:00",
+      "atVs": "vs",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "W"
+    },
+    "401769992": {
+      "id": "401769992",
+      "gameDate": "2025-05-18T19:30:00.000+00:00",
+      "atVs": "@",
+      "team": {
+        "id": "7",
+        "abbreviation": "DEN"
+      },
+      "opponent": {
+        "id": "25",
+        "abbreviation": "OKC"
+      },
+      "gameResult": "L"
+    }
+  },
+  "seasonTypes": [
+    {
+      "displayName": "2024-25 Postseason",
+      "categories": [
+        {
+          "displayName": "Conference Semifinals",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401769992",
+              "stats": [
+                "37",
+                "5-9",
+                "55.6",
+                "1-2",
+                "50.0",
+                "9-11",
+                "81.8",
+                "9",
+                "7",
+                "0",
+                "0",
+                "3",
+                "5",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401769991",
+              "stats": [
+                "41",
+                "9-14",
+                "64.3",
+                "1-3",
+                "33.3",
+                "10-12",
+                "83.3",
+                "14",
+                "8",
+                "1",
+                "2",
+                "4",
+                "1",
+                "29"
+              ]
+            },
+            {
+              "eventId": "401769990",
+              "stats": [
+                "44",
+                "17-25",
+                "68.0",
+                "5-7",
+                "71.4",
+                "5-5",
+                "100.0",
+                "15",
+                "5",
+                "0",
+                "2",
+                "4",
+                "2",
+                "44"
+              ]
+            },
+            {
+              "eventId": "401769823",
+              "stats": [
+                "43",
+                "7-22",
+                "31.8",
+                "2-8",
+                "25.0",
+                "11-14",
+                "78.6",
+                "13",
+                "3",
+                "0",
+                "4",
+                "4",
+                "2",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401769822",
+              "stats": [
+                "44",
+                "8-25",
+                "32.0",
+                "0-10",
+                "0.0",
+                "4-4",
+                "100.0",
+                "16",
+                "6",
+                "2",
+                "2",
+                "2",
+                "8",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401769821",
+              "stats": [
+                "32",
+                "6-16",
+                "37.5",
+                "2-4",
+                "50.0",
+                "3-5",
+                "60.0",
+                "8",
+                "6",
+                "1",
+                "1",
+                "6",
+                "6",
+                "17"
+              ]
+            },
+            {
+              "eventId": "401769820",
+              "stats": [
+                "42",
+                "15-29",
+                "51.7",
+                "2-6",
+                "33.3",
+                "10-13",
+                "76.9",
+                "22",
+                "6",
+                "2",
+                "1",
+                "5",
+                "7",
+                "42"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "Conference Quarterfinals",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401768066",
+              "stats": [
+                "32",
+                "6-14",
+                "42.9",
+                "1-2",
+                "50.0",
+                "3-4",
+                "75.0",
+                "10",
+                "8",
+                "1",
+                "3",
+                "5",
+                "5",
+                "16"
+              ]
+            },
+            {
+              "eventId": "401768065",
+              "stats": [
+                "42",
+                "11-22",
+                "50.0",
+                "2-4",
+                "50.0",
+                "1-2",
+                "50.0",
+                "7",
+                "8",
+                "1",
+                "3",
+                "3",
+                "4",
+                "25"
+              ]
+            },
+            {
+              "eventId": "401768064",
+              "stats": [
+                "37",
+                "4-13",
+                "30.8",
+                "1-4",
+                "25.0",
+                "4-5",
+                "80.0",
+                "10",
+                "12",
+                "2",
+                "1",
+                "1",
+                "2",
+                "13"
+              ]
+            },
+            {
+              "eventId": "401768063",
+              "stats": [
+                "43",
+                "14-25",
+                "56.0",
+                "3-6",
+                "50.0",
+                "5-6",
+                "83.3",
+                "21",
+                "8",
+                "1",
+                "2",
+                "4",
+                "2",
+                "36"
+              ]
+            },
+            {
+              "eventId": "401768062",
+              "stats": [
+                "37",
+                "9-14",
+                "64.3",
+                "2-3",
+                "66.7",
+                "3-4",
+                "75.0",
+                "13",
+                "13",
+                "0",
+                "1",
+                "1",
+                "2",
+                "23"
+              ]
+            },
+            {
+              "eventId": "401768061",
+              "stats": [
+                "43",
+                "8-16",
+                "50.0",
+                "4-8",
+                "50.0",
+                "6-10",
+                "60.0",
+                "11",
+                "10",
+                "0",
+                "3",
+                "2",
+                "7",
+                "26"
+              ]
+            },
+            {
+              "eventId": "401767819",
+              "stats": [
+                "46",
+                "12-24",
+                "50.0",
+                "1-4",
+                "25.0",
+                "4-6",
+                "66.7",
+                "9",
+                "12",
+                "1",
+                "3",
+                "4",
+                "2",
+                "29"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "Postseason",
+          "type": "total"
+        }
+      ]
+    },
+    {
+      "displayName": "2024-25 Regular Season",
+      "categories": [
+        {
+          "displayName": "april",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401705759",
+              "stats": [
+                "31",
+                "7-10",
+                "70.0",
+                "3-5",
+                "60.0",
+                "1-2",
+                "50.0",
+                "7",
+                "7",
+                "1",
+                "2",
+                "3",
+                "1",
+                "18"
+              ]
+            },
+            {
+              "eventId": "401705746",
+              "stats": [
+                "41",
+                "11-19",
+                "57.9",
+                "1-2",
+                "50.0",
+                "3-7",
+                "42.9",
+                "16",
+                "13",
+                "0",
+                "2",
+                "3",
+                "5",
+                "26"
+              ]
+            },
+            {
+              "eventId": "401705731",
+              "stats": [
+                "38",
+                "5-12",
+                "41.7",
+                "0-1",
+                "0.0",
+                "10-10",
+                "100.0",
+                "12",
+                "11",
+                "0",
+                "4",
+                "2",
+                "1",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401705708",
+              "stats": [
+                "39",
+                "18-33",
+                "54.5",
+                "3-11",
+                "27.3",
+                "2-3",
+                "66.7",
+                "15",
+                "13",
+                "1",
+                "2",
+                "0",
+                "4",
+                "41"
+              ]
+            },
+            {
+              "eventId": "401705691",
+              "stats": [
+                "37",
+                "13-17",
+                "76.5",
+                "4-7",
+                "57.1",
+                "3-3",
+                "100.0",
+                "12",
+                "9",
+                "0",
+                "2",
+                "2",
+                "6",
+                "33"
+              ]
+            },
+            {
+              "eventId": "401705668",
+              "stats": [
+                "53",
+                "18-29",
+                "62.1",
+                "6-11",
+                "54.5",
+                "19-24",
+                "79.2",
+                "10",
+                "10",
+                "0",
+                "2",
+                "5",
+                "4",
+                "61"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "march",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401705639",
+              "stats": [
+                "32",
+                "8-18",
+                "44.4",
+                "1-5",
+                "20.0",
+                "10-12",
+                "83.3",
+                "14",
+                "6",
+                "0",
+                "4",
+                "0",
+                "3",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401705623",
+              "stats": [
+                "38",
+                "16-25",
+                "64.0",
+                "3-6",
+                "50.0",
+                "4-7",
+                "57.1",
+                "10",
+                "10",
+                "0",
+                "0",
+                "2",
+                "3",
+                "39"
+              ]
+            },
+            {
+              "eventId": "401705541",
+              "stats": [
+                "39",
+                "16-30",
+                "53.3",
+                "1-8",
+                "12.5",
+                "7-7",
+                "100.0",
+                "13",
+                "9",
+                "2",
+                "1",
+                "3",
+                "3",
+                "40"
+              ]
+            },
+            {
+              "eventId": "401705531",
+              "stats": [
+                "38",
+                "8-16",
+                "50.0",
+                "0-4",
+                "0.0",
+                "12-17",
+                "70.6",
+                "7",
+                "5",
+                "1",
+                "3",
+                "5",
+                "4",
+                "28"
+              ]
+            },
+            {
+              "eventId": "401705518",
+              "stats": [
+                "38",
+                "13-23",
+                "56.5",
+                "2-6",
+                "33.3",
+                "6-8",
+                "75.0",
+                "8",
+                "4",
+                "0",
+                "1",
+                "3",
+                "3",
+                "34"
+              ]
+            },
+            {
+              "eventId": "401705502",
+              "stats": [
+                "40",
+                "15-20",
+                "75.0",
+                "1-2",
+                "50.0",
+                "4-5",
+                "80.0",
+                "18",
+                "8",
+                "1",
+                "1",
+                "4",
+                "1",
+                "35"
+              ]
+            },
+            {
+              "eventId": "401705486",
+              "stats": [
+                "41",
+                "10-23",
+                "43.5",
+                "2-10",
+                "20.0",
+                "2-6",
+                "33.3",
+                "13",
+                "9",
+                "3",
+                "1",
+                "3",
+                "2",
+                "24"
+              ]
+            },
+            {
+              "eventId": "401705475",
+              "stats": [
+                "45",
+                "13-22",
+                "59.1",
+                "3-7",
+                "42.9",
+                "2-3",
+                "66.7",
+                "21",
+                "22",
+                "0",
+                "3",
+                "3",
+                "4",
+                "31"
+              ]
+            },
+            {
+              "eventId": "401705462",
+              "stats": [
+                "38",
+                "9-18",
+                "50.0",
+                "0-2",
+                "0.0",
+                "4-6",
+                "66.7",
+                "15",
+                "6",
+                "0",
+                "1",
+                "3",
+                "7",
+                "22"
+              ]
+            },
+            {
+              "eventId": "401705432",
+              "stats": [
+                "39",
+                "9-15",
+                "60.0",
+                "2-3",
+                "66.7",
+                "0-0",
+                "0.0",
+                "14",
+                "9",
+                "0",
+                "2",
+                "2",
+                "2",
+                "20"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "february",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401705416",
+              "stats": [
+                "34",
+                "6-12",
+                "50.0",
+                "0-3",
+                "0.0",
+                "11-12",
+                "91.7",
+                "17",
+                "15",
+                "2",
+                "1",
+                "2",
+                "7",
+                "23"
+              ]
+            },
+            {
+              "eventId": "401705412",
+              "stats": [
+                "38",
+                "13-16",
+                "81.3",
+                "1-2",
+                "50.0",
+                "5-7",
+                "71.4",
+                "14",
+                "10",
+                "0",
+                "1",
+                "4",
+                "5",
+                "32"
+              ]
+            },
+            {
+              "eventId": "401705388",
+              "stats": [
+                "39",
+                "9-14",
+                "64.3",
+                "0-1",
+                "0.0",
+                "0-0",
+                "0.0",
+                "9",
+                "19",
+                "1",
+                "3",
+                "1",
+                "4",
+                "18"
+              ]
+            },
+            {
+              "eventId": "401705374",
+              "stats": [
+                "35",
+                "2-7",
+                "28.6",
+                "0-1",
+                "0.0",
+                "8-10",
+                "80.0",
+                "13",
+                "10",
+                "0",
+                "1",
+                "3",
+                "6",
+                "12"
+              ]
+            },
+            {
+              "eventId": "401705360",
+              "stats": [
+                "37",
+                "11-22",
+                "50.0",
+                "6-14",
+                "42.9",
+                "1-2",
+                "50.0",
+                "17",
+                "9",
+                "1",
+                "1",
+                "1",
+                "2",
+                "29"
+              ]
+            },
+            {
+              "eventId": "401752957",
+              "stats": [
+                "10",
+                "1-3",
+                "33.3",
+                "0-2",
+                "0.0",
+                "0-2",
+                "0.0",
+                "4",
+                "2",
+                "0",
+                "0",
+                "0",
+                "1",
+                "2"
+              ]
+            },
+            {
+              "eventId": "401752955",
+              "stats": [
+                "6",
+                "1-1",
+                "100.0",
+                "0-0",
+                "0.0",
+                "0-0",
+                "0.0",
+                "1",
+                "3",
+                "0",
+                "0",
+                "0",
+                "2",
+                "2"
+              ]
+            },
+            {
+              "eventId": "401705346",
+              "stats": [
+                "36",
+                "11-20",
+                "55.0",
+                "0-3",
+                "0.0",
+                "4-4",
+                "100.0",
+                "15",
+                "10",
+                "0",
+                "2",
+                "4",
+                "4",
+                "26"
+              ]
+            },
+            {
+              "eventId": "401705329",
+              "stats": [
+                "31",
+                "15-22",
+                "68.2",
+                "2-7",
+                "28.6",
+                "8-8",
+                "100.0",
+                "7",
+                "8",
+                "1",
+                "3",
+                "2",
+                "5",
+                "40"
+              ]
+            },
+            {
+              "eventId": "401705315",
+              "stats": [
+                "29",
+                "11-13",
+                "84.6",
+                "1-2",
+                "50.0",
+                "3-3",
+                "100.0",
+                "11",
+                "9",
+                "0",
+                "0",
+                "4",
+                "2",
+                "26"
+              ]
+            },
+            {
+              "eventId": "401705296",
+              "stats": [
+                "31",
+                "11-16",
+                "68.8",
+                "2-4",
+                "50.0",
+                "4-6",
+                "66.7",
+                "10",
+                "12",
+                "0",
+                "2",
+                "2",
+                "3",
+                "28"
+              ]
+            },
+            {
+              "eventId": "401705292",
+              "stats": [
+                "36",
+                "15-28",
+                "53.6",
+                "5-13",
+                "38.5",
+                "3-3",
+                "100.0",
+                "8",
+                "10",
+                "1",
+                "1",
+                "3",
+                "1",
+                "38"
+              ]
+            },
+            {
+              "eventId": "401705272",
+              "stats": [
+                "36",
+                "9-13",
+                "69.2",
+                "1-3",
+                "33.3",
+                "8-10",
+                "80.0",
+                "14",
+                "10",
+                "2",
+                "1",
+                "2",
+                "1",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401705254",
+              "stats": [
+                "37",
+                "9-17",
+                "52.9",
+                "2-7",
+                "28.6",
+                "8-9",
+                "88.9",
+                "13",
+                "17",
+                "1",
+                "4",
+                "2",
+                "4",
+                "28"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "january",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401705247",
+              "stats": [
+                "37",
+                "11-16",
+                "68.8",
+                "2-3",
+                "66.7",
+                "4-5",
+                "80.0",
+                "9",
+                "13",
+                "0",
+                "2",
+                "3",
+                "6",
+                "28"
+              ]
+            },
+            {
+              "eventId": "401705234",
+              "stats": [
+                "33",
+                "6-15",
+                "40.0",
+                "3-7",
+                "42.9",
+                "2-2",
+                "100.0",
+                "6",
+                "6",
+                "1",
+                "2",
+                "3",
+                "2",
+                "17"
+              ]
+            },
+            {
+              "eventId": "401705221",
+              "stats": [
+                "40",
+                "15-21",
+                "71.4",
+                "1-4",
+                "25.0",
+                "2-2",
+                "100.0",
+                "12",
+                "14",
+                "1",
+                "1",
+                "1",
+                "4",
+                "33"
+              ]
+            },
+            {
+              "eventId": "401705200",
+              "stats": [
+                "32",
+                "9-13",
+                "69.2",
+                "2-4",
+                "50.0",
+                "0-1",
+                "0.0",
+                "3",
+                "11",
+                "0",
+                "0",
+                "0",
+                "7",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401705192",
+              "stats": [
+                "37",
+                "12-19",
+                "63.2",
+                "2-3",
+                "66.7",
+                "9-10",
+                "90.0",
+                "22",
+                "17",
+                "2",
+                "1",
+                "5",
+                "1",
+                "35"
+              ]
+            },
+            {
+              "eventId": "401705175",
+              "stats": [
+                "30",
+                "10-15",
+                "66.7",
+                "2-3",
+                "66.7",
+                "5-5",
+                "100.0",
+                "13",
+                "10",
+                "1",
+                "4",
+                "1",
+                "2",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401705159",
+              "stats": [
+                "30",
+                "7-9",
+                "77.8",
+                "0-0",
+                "0.0",
+                "6-7",
+                "85.7",
+                "14",
+                "10",
+                "3",
+                "3",
+                "0",
+                "2",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401705145",
+              "stats": [
+                "31",
+                "9-12",
+                "75.0",
+                "1-2",
+                "50.0",
+                "5-5",
+                "100.0",
+                "12",
+                "10",
+                "0",
+                "1",
+                "1",
+                "2",
+                "24"
+              ]
+            },
+            {
+              "eventId": "401705125",
+              "stats": [
+                "29",
+                "4-7",
+                "57.1",
+                "1-2",
+                "50.0",
+                "1-2",
+                "50.0",
+                "14",
+                "10",
+                "0",
+                "2",
+                "3",
+                "1",
+                "10"
+              ]
+            },
+            {
+              "eventId": "401705106",
+              "stats": [
+                "39",
+                "6-13",
+                "46.2",
+                "0-2",
+                "0.0",
+                "7-9",
+                "77.8",
+                "18",
+                "9",
+                "0",
+                "3",
+                "4",
+                "4",
+                "19"
+              ]
+            },
+            {
+              "eventId": "401705097",
+              "stats": [
+                "38",
+                "14-21",
+                "66.7",
+                "1-1",
+                "100.0",
+                "6-8",
+                "75.0",
+                "12",
+                "15",
+                "0",
+                "4",
+                "1",
+                "1",
+                "35"
+              ]
+            },
+            {
+              "eventId": "401705050",
+              "stats": [
+                "43",
+                "19-35",
+                "54.3",
+                "3-8",
+                "37.5",
+                "5-6",
+                "83.3",
+                "9",
+                "10",
+                "2",
+                "2",
+                "3",
+                "2",
+                "46"
+              ]
+            },
+            {
+              "eventId": "401705041",
+              "stats": [
+                "37",
+                "15-36",
+                "41.7",
+                "3-10",
+                "30.0",
+                "8-9",
+                "88.9",
+                "18",
+                "9",
+                "0",
+                "2",
+                "3",
+                "2",
+                "41"
+              ]
+            },
+            {
+              "eventId": "401705027",
+              "stats": [
+                "30",
+                "8-16",
+                "50.0",
+                "1-1",
+                "100.0",
+                "6-6",
+                "100.0",
+                "17",
+                "15",
+                "1",
+                "0",
+                "2",
+                "2",
+                "23"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "december",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401705011",
+              "stats": [
+                "38",
+                "14-33",
+                "42.4",
+                "3-9",
+                "33.3",
+                "5-6",
+                "83.3",
+                "22",
+                "11",
+                "0",
+                "4",
+                "0",
+                "2",
+                "36"
+              ]
+            },
+            {
+              "eventId": "401704998",
+              "stats": [
+                "37",
+                "11-17",
+                "64.7",
+                "4-5",
+                "80.0",
+                "11-14",
+                "78.6",
+                "9",
+                "8",
+                "0",
+                "0",
+                "4",
+                "2",
+                "37"
+              ]
+            },
+            {
+              "eventId": "401704990",
+              "stats": [
+                "36",
+                "12-19",
+                "63.2",
+                "0-3",
+                "0.0",
+                "3-4",
+                "75.0",
+                "14",
+                "13",
+                "0",
+                "3",
+                "1",
+                "1",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401704975",
+              "stats": [
+                "38",
+                "10-19",
+                "52.6",
+                "2-7",
+                "28.6",
+                "3-4",
+                "75.0",
+                "15",
+                "2",
+                "0",
+                "2",
+                "1",
+                "2",
+                "25"
+              ]
+            },
+            {
+              "eventId": "401704968",
+              "stats": [
+                "30",
+                "12-17",
+                "70.6",
+                "4-6",
+                "66.7",
+                "4-5",
+                "80.0",
+                "2",
+                "7",
+                "0",
+                "0",
+                "1",
+                "1",
+                "32"
+              ]
+            },
+            {
+              "eventId": "401704956",
+              "stats": [
+                "43",
+                "11-20",
+                "55.0",
+                "2-3",
+                "66.7",
+                "3-5",
+                "60.0",
+                "13",
+                "10",
+                "1",
+                "1",
+                "5",
+                "3",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401704937",
+              "stats": [
+                "37",
+                "13-18",
+                "72.2",
+                "4-6",
+                "66.7",
+                "4-4",
+                "100.0",
+                "6",
+                "8",
+                "0",
+                "1",
+                "4",
+                "3",
+                "34"
+              ]
+            },
+            {
+              "eventId": "401736819",
+              "stats": [
+                "38",
+                "8-19",
+                "42.1",
+                "1-6",
+                "16.7",
+                "3-4",
+                "75.0",
+                "14",
+                "13",
+                "1",
+                "2",
+                "0",
+                "5",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401736807",
+              "stats": [
+                "30",
+                "6-9",
+                "66.7",
+                "2-2",
+                "100.0",
+                "2-4",
+                "50.0",
+                "7",
+                "2",
+                "0",
+                "2",
+                "2",
+                "5",
+                "16"
+              ]
+            },
+            {
+              "eventId": "401704916",
+              "stats": [
+                "35",
+                "17-29",
+                "58.6",
+                "3-6",
+                "50.0",
+                "11-13",
+                "84.6",
+                "14",
+                "8",
+                "0",
+                "3",
+                "2",
+                "3",
+                "48"
+              ]
+            },
+            {
+              "eventId": "401704907",
+              "stats": [
+                "39",
+                "22-39",
+                "56.4",
+                "3-6",
+                "50.0",
+                "9-13",
+                "69.2",
+                "16",
+                "8",
+                "0",
+                "1",
+                "5",
+                "5",
+                "56"
+              ]
+            },
+            {
+              "eventId": "401704891",
+              "stats": [
+                "39",
+                "13-26",
+                "50.0",
+                "0-3",
+                "0.0",
+                "1-1",
+                "100.0",
+                "20",
+                "11",
+                "0",
+                "3",
+                "3",
+                "3",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401703427",
+              "stats": [
+                "40",
+                "14-24",
+                "58.3",
+                "3-4",
+                "75.0",
+                "7-9",
+                "77.8",
+                "10",
+                "6",
+                "1",
+                "5",
+                "1",
+                "4",
+                "38"
+              ]
+            },
+            {
+              "eventId": "401704880",
+              "stats": [
+                "39",
+                "12-24",
+                "50.0",
+                "2-7",
+                "28.6",
+                "2-4",
+                "50.0",
+                "14",
+                "11",
+                "1",
+                "1",
+                "3",
+                "5",
+                "28"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "november",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401704864",
+              "stats": [
+                "34",
+                "13-19",
+                "68.4",
+                "2-3",
+                "66.7",
+                "2-3",
+                "66.7",
+                "10",
+                "7",
+                "1",
+                "1",
+                "1",
+                "1",
+                "30"
+              ]
+            },
+            {
+              "eventId": "401704849",
+              "stats": [
+                "32",
+                "9-20",
+                "45.0",
+                "2-7",
+                "28.6",
+                "2-2",
+                "100.0",
+                "7",
+                "7",
+                "0",
+                "1",
+                "1",
+                "0",
+                "22"
+              ]
+            },
+            {
+              "eventId": "401704836",
+              "stats": [
+                "37",
+                "12-20",
+                "60.0",
+                "3-7",
+                "42.9",
+                "7-8",
+                "87.5",
+                "13",
+                "8",
+                "1",
+                "2",
+                "3",
+                "6",
+                "34"
+              ]
+            },
+            {
+              "eventId": "401703402",
+              "stats": [
+                "39",
+                "13-22",
+                "59.1",
+                "2-2",
+                "100.0",
+                "5-7",
+                "71.4",
+                "17",
+                "10",
+                "0",
+                "0",
+                "0",
+                "3",
+                "33"
+              ]
+            },
+            {
+              "eventId": "401704774",
+              "stats": [
+                "38",
+                "13-21",
+                "61.9",
+                "3-3",
+                "100.0",
+                "8-8",
+                "100.0",
+                "18",
+                "15",
+                "0",
+                "3",
+                "2",
+                "4",
+                "37"
+              ]
+            },
+            {
+              "eventId": "401704760",
+              "stats": [
+                "40",
+                "11-13",
+                "84.6",
+                "1-1",
+                "100.0",
+                "7-7",
+                "100.0",
+                "11",
+                "14",
+                "0",
+                "2",
+                "2",
+                "5",
+                "30"
+              ]
+            },
+            {
+              "eventId": "401704743",
+              "stats": [
+                "39",
+                "9-20",
+                "45.0",
+                "1-3",
+                "33.3",
+                "4-6",
+                "66.7",
+                "20",
+                "16",
+                "2",
+                "2",
+                "2",
+                "5",
+                "23"
+              ]
+            },
+            {
+              "eventId": "401704732",
+              "stats": [
+                "38",
+                "10-22",
+                "45.5",
+                "1-5",
+                "20.0",
+                "7-8",
+                "87.5",
+                "14",
+                "13",
+                "2",
+                "1",
+                "2",
+                "7",
+                "28"
+              ]
+            },
+            {
+              "eventId": "401704714",
+              "stats": [
+                "30",
+                "10-18",
+                "55.6",
+                "3-4",
+                "75.0",
+                "4-4",
+                "100.0",
+                "16",
+                "9",
+                "0",
+                "1",
+                "1",
+                "5",
+                "27"
+              ]
+            },
+            {
+              "eventId": "401704705",
+              "stats": [
+                "40",
+                "8-16",
+                "50.0",
+                "2-3",
+                "66.7",
+                "8-10",
+                "80.0",
+                "9",
+                "13",
+                "1",
+                "3",
+                "1",
+                "3",
+                "26"
+              ]
+            }
+          ]
+        },
+        {
+          "displayName": "october",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401704679",
+              "stats": [
+                "41",
+                "9-16",
+                "56.3",
+                "0-0",
+                "0.0",
+                "11-13",
+                "84.6",
+                "18",
+                "16",
+                "1",
+                "0",
+                "3",
+                "1",
+                "29"
+              ]
+            },
+            {
+              "eventId": "401704673",
+              "stats": [
+                "44",
+                "18-27",
+                "66.7",
+                "3-5",
+                "60.0",
+                "1-2",
+                "50.0",
+                "10",
+                "4",
+                "2",
+                "1",
+                "2",
+                "3",
+                "40"
+              ]
+            },
+            {
+              "eventId": "401704653",
+              "stats": [
+                "37",
+                "14-26",
+                "53.8",
+                "7-12",
+                "58.3",
+                "6-8",
+                "75.0",
+                "9",
+                "4",
+                "1",
+                "2",
+                "2",
+                "5",
+                "41"
+              ]
+            },
+            {
+              "eventId": "401704641",
+              "stats": [
+                "35",
+                "6-13",
+                "46.2",
+                "1-3",
+                "33.3",
+                "3-4",
+                "75.0",
+                "12",
+                "13",
+                "1",
+                "2",
+                "3",
+                "3",
+                "16"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "displayName": "2024-25 Preseason",
+      "categories": [
+        {
+          "displayName": "Preseason",
+          "type": "event",
+          "events": [
+            {
+              "eventId": "401717024",
+              "stats": [
+                "28",
+                "2-5",
+                "40.0",
+                "0-0",
+                "0.0",
+                "0-2",
+                "0.0",
+                "7",
+                "7",
+                "1",
+                "3",
+                "4",
+                "3",
+                "4"
+              ]
+            },
+            {
+              "eventId": "401716995",
+              "stats": [
+                "30",
+                "9-16",
+                "56.3",
+                "0-4",
+                "0.0",
+                "3-5",
+                "60.0",
+                "14",
+                "9",
+                "0",
+                "1",
+                "0",
+                "6",
+                "21"
+              ]
+            },
+            {
+              "eventId": "401716951",
+              "stats": [
+                "19",
+                "7-13",
+                "53.8",
+                "2-4",
+                "50.0",
+                "4-5",
+                "80.0",
+                "7",
+                "3",
+                "0",
+                "0",
+                "2",
+                "3",
+                "20"
+              ]
+            },
+            {
+              "eventId": "401716947",
+              "stats": [
+                "17",
+                "5-7",
+                "71.4",
+                "0-0",
+                "0.0",
+                "4-5",
+                "80.0",
+                "8",
+                "2",
+                "0",
+                "2",
+                "2",
+                "1",
+                "14"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

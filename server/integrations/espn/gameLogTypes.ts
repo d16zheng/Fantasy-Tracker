@@ -10,13 +10,10 @@ export type EspnGameLogEvent = {
     team?: {
         id?: string;
         abbreviation?: string;
-        isAllStar?: boolean;
     };
     opponent?: {
         id?: string;
         abbreviation?: string;
-        displayName?: string;
-        isAllStar?: boolean;
     };
     gameResult?: string;
 };

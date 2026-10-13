@@ -2,6 +2,26 @@ import type { Team } from "./team";
 
 export type SeasonPhase = "regular" | "postseason";
 
+export type GameStats = {
+    minutes: number;
+
+    fgm: number;
+    fga: number;
+
+    ftm: number;
+    fta: number;
+
+    threepm: number;
+    threepa: number;
+
+    rebounds: number;
+    assists: number;
+    steals: number;
+    blocks: number;
+    to: number;
+    points: number;
+};
+
 export type SeasonStats = {
     playerId: string;
     season: string;
@@ -23,7 +43,7 @@ export type SeasonStats = {
     ppg: number;
 };
 
-export type GamePerformance = {
+export type GamePerformance = GameStats & {
     id: string;
     playerId: string;
 
@@ -37,22 +57,4 @@ export type GamePerformance = {
     playerTeam: Team;
     opponent: Team;
     isHome: boolean;
-
-    minutes: number;
-
-    fgm: number;
-    fga: number;
-
-    ftm: number;
-    fta: number;
-
-    threepm: number;
-    threepa: number;
-
-    rebounds: number;
-    assists: number;
-    steals: number;
-    blocks: number;
-    to: number;
-    points: number;
 };

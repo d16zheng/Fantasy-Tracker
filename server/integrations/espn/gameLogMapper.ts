@@ -1,4 +1,5 @@
-import type { GamePerformance } from "../../../shared/types/stats";
+import type { GamePerformance, GameStats } from "../../../shared/types/stats";
+import { isNbaTeam } from "../../data/nbaTeam";
 import type { EspnGameLogResponse } from "./gameLogTypes";
 
 function parseNumber(value: string): number {
@@ -67,7 +68,7 @@ function getRequiredStat(
 
 function mapGameStats(
     stats: Record<string, string>
-) {
+): GameStats {
     const get = (name: string) =>
         getRequiredStat(stats, name);
 
@@ -153,8 +154,11 @@ export function mapEspnGameLog(
                             `Incomplete game metadata: ${row.eventId}`,
                         );
                     }
-
-                    if (event.team?.isAllStar || event.opponent?.isAllStar) {
+                    
+                    if (
+                        !isNbaTeam(playerTeam) ||
+                        !isNbaTeam(opponent)
+                    ) {
                         continue;
                     }
 
