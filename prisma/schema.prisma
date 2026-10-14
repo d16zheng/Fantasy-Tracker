@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model TrackedPlayer {
+  id            String @id
+  espnId        String @ unique
+  firstName     String
+  lastName      String
+  position      String
+  team          String
+
+  games         GamePerformanceRecord[]
+  syncs         GameLogSync[]
+}
+
+model GamePerformanceRecord {
+  id              String @id
+  playerId        String 
+  espnEventId     String
+  seasonEndYear   Int
+  phase           String
+  date            String
+
+  data            String
+
+  player          TrackedPlayer @relation(fields: [playerId], references: [id])
+
+  @@unique([playerId, espnEventId])
+  @@index([playerId, seasonEndYear])
+}
+
+model GameLogSync {
+  playerId        String
+  seasonEndYear   Int
+  fetchedAt       DateTime
+
+  player TrackedPlayer @relation(fields: [playerId], references: [id])
+
+  @@id([playerId, seasonEndYear])
+}

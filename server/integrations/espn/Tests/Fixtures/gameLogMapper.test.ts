@@ -6,7 +6,7 @@ import { mapEspnGameLog } from "../../gameLogMapper";
 
 async function loadFixture(): Promise<EspnGameLogResponse> {
     const fixtureUrl = new URL(
-        "./fixtures/playerGameLog.json",
+        "../../fixtures/playerGameLog.json",
         import.meta.url,
     );
     const fixture = await readFile(fixtureUrl, "utf8");
