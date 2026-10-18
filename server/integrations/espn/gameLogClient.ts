@@ -2,6 +2,38 @@ import type { EspnGameLogResponse } from "./gameLogTypes";
 
 const ESPN_GAME_LOG_BASE_URL = "https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes";
 
+function parseGameLogResponse(value: unknown): EspnGameLogResponse {
+    if (
+        typeof value !== "object" ||
+        value === null ||
+        Array.isArray(value)
+    ) {
+        throw new Error("Invalid ESPN game-log response");
+    }
+
+    const data = value as Partial<EspnGameLogResponse>;
+
+    if (
+        "filters" in value &&
+        !("seasonTypes" in value)
+    ) {
+        return {
+            names: [],
+            events: {},
+            seasonTypes: []
+        }
+    }
+    if (
+        !Array.isArray(data) ||
+        !data.events ||
+        !Array.isArray(data.seasonTypes)
+    ) {
+        throw new Error("Missing ESPN game-log data")
+    }
+
+    return data as EspnGameLogResponse
+}
+
 export async function fetchEspnGameLog(
     espnPlayerId: string,
     seasonEndYear: number
@@ -27,5 +59,5 @@ export async function fetchEspnGameLog(
             `ESPN game-log request failed: ${response.status} ${response.statusText}`
         );
     }
-    return await response.json() as EspnGameLogResponse;
+    return parseGameLogResponse(await response.json());
 }
