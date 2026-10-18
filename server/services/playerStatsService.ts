@@ -4,6 +4,7 @@ import { getFantasyRoster } from "./fantasyRosterService";
 import { getPlayerGameLog } from "./gameLogService";
 import { calculateSeasonStats } from "./seasonStatsService";
 import { createTrackedPlayers } from "./trackedPlayerService";
+import { saveTrackedPlayer } from "../repositories/playerRepository";
 
 export async function getRosterPlayerStats(
     fantasyTeam: EspnFantasyTeam,
@@ -16,6 +17,7 @@ export async function getRosterPlayerStats(
 
     const playerStats = await Promise.all(
         trackedPlayers.map(async (player) => {
+            await saveTrackedPlayer(player);
             const gameLog = await getPlayerGameLog(
                 player.id,
                 player.espnId,

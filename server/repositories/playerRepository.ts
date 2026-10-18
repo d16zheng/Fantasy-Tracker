@@ -2,7 +2,7 @@ import type { TrackedPlayer } from "../../shared/types/player";
 import { prisma } from "../db/prisma";
 
 
-export async function saveTrackedPLayer(
+export async function saveTrackedPlayer(
     player: TrackedPlayer
 ): Promise<void> {
     await prisma.trackedPlayer.upsert({
