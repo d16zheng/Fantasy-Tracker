@@ -93,6 +93,7 @@ export default function PlayerDetails({ summary, seasonEndYear, selectedSeasonEn
       </header>
       {loadingSeason && <div className="stats-update" role="status">Loading {formatSeason(selectedSeasonEndYear)} stats…</div>}
       {seasonError && <div className="stats-update stats-update-error" role="alert">{seasonError}</div>}
+      {summary.statsError && <div className="stats-update stats-update-error" role="alert">{summary.statsError}</div>}
       <section className="season-summary" aria-labelledby="season-summary-heading">
         <h3 id="season-summary-heading">Season summary</h3>
         <SeasonSummaryTable id="season-averages" title="Regular-season averages" stats={averageRows} />

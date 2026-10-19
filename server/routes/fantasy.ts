@@ -1,9 +1,7 @@
 import { Router } from "express";
-import { fetchEspnLeague } from "../integrations/espn/client";
-import { mapEspnPlayer } from "../integrations/espn/mapper";
-import { getCurrentSeasonEndYear } from "../../shared/season";
-import { prisma } from "../db/prisma";
 import { getFantasyRoster } from "../services/fantasyRosterService";
+import { getFantasyLeague } from "../services/fantasyLeagueService";
+import { updateFantasyTeamOwner } from "../services/fantasyTeamOwnerService";
 import { createTrackedPlayers } from "../services/trackedPlayerService";
 
 const router = Router();
@@ -11,27 +9,14 @@ const router = Router();
 router.get("/league", async (req, res) => {
     try {
         const leagueId = req.query.leagueId;
-        const teamCount = Number(req.query.teamCount);
-        if (typeof leagueId !== "string" || !/^\d+$/.test(leagueId.trim()) || !Number.isInteger(teamCount) || teamCount < 1 || teamCount > 30) {
-            return res.status(400).json({ error: "A numeric leagueId and teamCount from 1 to 30 are required" });
+
+        if (typeof leagueId !== "string" || !/^\d+$/.test(leagueId.trim())) {
+            return res.status(400).json({ error: "A numeric leagueId is required" });
         }
-        const seasonId = getCurrentSeasonEndYear();
-        const response = await fetchEspnLeague(leagueId.trim(), seasonId);
-        const allTeams = response.teams.map((team) => ({
-            teamId: String(team.id),
-            name: team.name || `Team ${team.id}`,
-            owner: team.owner || "",
-            players: (team.roster?.entries ?? []).map(({ playerPoolEntry }) => mapEspnPlayer(playerPoolEntry.player)),
-        }));
-        const savedOwners = await prisma.fantasyTeamOwner.findMany({ where: { leagueId: leagueId.trim() } });
-        const ownersByTeam = new Map(savedOwners.map(({ teamId, owner }) => [String(teamId), owner]));
-        await prisma.$transaction(allTeams.map((team) => prisma.fantasyLeagueTeam.upsert({
-            where: { leagueId_teamId: { leagueId: leagueId.trim(), teamId: Number(team.teamId) } },
-            create: { leagueId: leagueId.trim(), teamId: Number(team.teamId), name: team.name, rosterJson: JSON.stringify(team.players) },
-            update: { name: team.name, rosterJson: JSON.stringify(team.players) },
-        })));
-        const teams = allTeams.slice(0, teamCount).map((team) => ({ ...team, owner: ownersByTeam.get(team.teamId) || team.owner }));
-        return res.json({ leagueId: leagueId.trim(), seasonId, teams });
+
+        const league = await getFantasyLeague(leagueId.trim());
+
+        return res.json(league);
     } catch (error) {
         console.error("Failed to fetch fantasy league:", error);
         return res.status(500).json({ error: "Failed to fetch fantasy league" });
@@ -44,12 +29,14 @@ router.put("/owner", async (req, res) => {
         return res.status(400).json({ error: "leagueId, teamId, and owner are required" });
     }
     try {
-        const value = owner.trim().slice(0, 80);
-        await prisma.fantasyTeamOwner.upsert({
-            where: { leagueId_teamId: { leagueId: leagueId.trim(), teamId: Number(teamId) } },
-            create: { leagueId: leagueId.trim(), teamId: Number(teamId), owner: value },
-            update: { owner: value },
-        });
+        const value = await updateFantasyTeamOwner(
+            leagueId.trim(),
+            Number(teamId),
+            owner
+        );
+        if (value === null) {
+            return res.status(404).json({ error: "Fantasy team was not found" });
+        }
         return res.json({ owner: value });
     } catch (error) {
         console.error("Failed to save fantasy team owner:", error);

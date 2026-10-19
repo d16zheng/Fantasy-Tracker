@@ -27,6 +27,8 @@ h2 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
 .team-count { color: #657180; font-size: 12px; font-weight: 500; }
 .owner-field { padding: 14px 20px 0; }
 .owner-saving { display: block; padding: 6px 20px 0; color: #657180; font-size: 12px; }
+.owner-save-error { display: block; padding: 6px 20px 0; color: #9d2c25; font-size: 12px; }
+.player-stats-error { display: block; margin-top: 3px; color: #9d2c25; font-size: 11px; font-weight: 500; }
 .compact-roster { list-style: none; margin: 0; padding: 12px 20px; }
 .compact-roster li { display: flex; min-height: 32px; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid #edf0f3; font-size: 13px; }
 .compact-roster li > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

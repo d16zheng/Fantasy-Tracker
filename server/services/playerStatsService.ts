@@ -15,29 +15,33 @@ export async function getRosterPlayerStats(
 
     const trackedPlayers = createTrackedPlayers(roster);
 
-    const playerStats = await Promise.all(
-        trackedPlayers.map(async (player) => {
+    const playerStats: PlayerSeasonSummary[] = new Array(trackedPlayers.length);
+    let nextIndex = 0;
+    const workerCount = Math.min(4, trackedPlayers.length);
+
+    await Promise.all(Array.from({ length: workerCount }, async () => {
+        while (nextIndex < trackedPlayers.length) {
+            const index = nextIndex++;
+            const player = trackedPlayers[index];
             await saveTrackedPlayer(player);
-            const gameLog = await getPlayerGameLog(
-                player.id,
-                player.espnId,
-                seasonEndYear
-            );
 
-            const seasonStats = calculateSeasonStats(
-                gameLog,
-                player.id,
-                seasonEndYear
-            );
-
-            return {
-                player,
-                seasonStats,
-                gameLog
-            };
-
-        })
-    );
+            try {
+                const gameLog = await getPlayerGameLog(player.id, player.espnId, seasonEndYear);
+                playerStats[index] = {
+                    player,
+                    seasonStats: calculateSeasonStats(gameLog, player.id, seasonEndYear),
+                    gameLog,
+                };
+            } catch {
+                playerStats[index] = {
+                    player,
+                    seasonStats: calculateSeasonStats([], player.id, seasonEndYear),
+                    gameLog: [],
+                    statsError: "Stats could not be loaded for this player.",
+                };
+            }
+        }
+    }));
 
     return playerStats;
 }

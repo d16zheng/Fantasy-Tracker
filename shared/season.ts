@@ -1,4 +1,3 @@
-// Fantasy basketball rolls over to the upcoming season in July.
 export function getCurrentSeasonEndYear(date = new Date()): number {
   return date.getFullYear() + (date.getMonth() >= 6 ? 1 : 0);
 }

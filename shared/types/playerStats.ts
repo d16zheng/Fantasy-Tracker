@@ -5,4 +5,5 @@ export type PlayerSeasonSummary = {
     player: TrackedPlayer;
     seasonStats: SeasonStats;
     gameLog: GamePerformance[];
+    statsError?: string;
 };

@@ -27,15 +27,15 @@ function PlayerAverages({ team, players, onSelect }: { team: LeagueTeam; players
         if (!summary) return <tr className="empty-comparison-slot" key={`empty-${index}`} aria-hidden="true"><th>&nbsp;</th>{Array.from({ length: 7 }, (_, cell) => <td key={cell}>&nbsp;</td>)}</tr>;
         const { player, seasonStats } = summary;
         const active = seasonStats.gamesPlayed > 0;
-        return <tr key={player.id}>
+        return <tr key={player.id} title={summary.statsError}>
           <th scope="row"><button className="comparison-player-link" onClick={() => onSelect(player.id)}>{player.firstName} {player.lastName}</button></th>
-          <td>{active ? seasonStats.ppg.toFixed(1) : '—'}</td>
-          <td>{active ? seasonStats.rpg.toFixed(1) : '—'}</td>
-          <td>{active ? seasonStats.apg.toFixed(1) : '—'}</td>
-          <td>{active ? seasonStats.spg.toFixed(1) : '—'}</td>
-          <td>{active ? seasonStats.bpg.toFixed(1) : '—'}</td>
-          <td>{active ? `${seasonStats.fgPercentage.toFixed(1)}%` : '—'}</td>
-          <td>{active ? seasonStats.threepmpg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.ppg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.rpg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.apg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.spg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.bpg.toFixed(1) : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? `${seasonStats.fgPercentage.toFixed(1)}%` : '—'}</td>
+          <td>{summary.statsError ? 'Unavailable' : active ? seasonStats.threepmpg.toFixed(1) : '—'}</td>
         </tr>;
       })}</tbody>
     </table></div>
@@ -61,19 +61,27 @@ export default function ComparisonPage() {
   const [secondPlayers, setSecondPlayers] = useState<PlayerSeasonSummary[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const comparisonRequest = useRef<AbortController | null>(null);
+
+  useEffect(() => () => comparisonRequest.current?.abort(), []);
 
   const compare = useCallback(async (requestedSeasonEndYear = seasonEndYear) => {
     if (!league || !firstTeamId || !secondTeamId || firstTeamId === secondTeamId) return;
+    comparisonRequest.current?.abort();
+    const controller = new AbortController();
+    comparisonRequest.current = controller;
     setLoading(true); setError('');
     try {
       const [first, second] = await Promise.all([
-        getRosterStats({ leagueId: league.leagueId, teamId: firstTeamId, seasonEndYear: requestedSeasonEndYear }),
-        getRosterStats({ leagueId: league.leagueId, teamId: secondTeamId, seasonEndYear: requestedSeasonEndYear }),
+        getRosterStats({ leagueId: league.leagueId, teamId: firstTeamId, seasonEndYear: requestedSeasonEndYear }, controller.signal),
+        getRosterStats({ leagueId: league.leagueId, teamId: secondTeamId, seasonEndYear: requestedSeasonEndYear }, controller.signal),
       ]);
+      if (controller.signal.aborted) return;
       setFirstPlayers(first); setSecondPlayers(second); setDisplayedSeasonEndYear(requestedSeasonEndYear);
     } catch (e) {
+      if (controller.signal.aborted) return;
       setError(e instanceof Error ? e.message : 'Could not load team statistics.');
-    } finally { setLoading(false); }
+    } finally { if (!controller.signal.aborted) setLoading(false); }
   }, [firstTeamId, league, secondTeamId, seasonEndYear]);
 
   useEffect(() => {

@@ -44,7 +44,7 @@ export default function PlayerTable({ players, seasonLabel, isUpdating = false, 
           </tr>
         </thead>
         <tbody>
-          {sortedPlayers.map(({ player, seasonStats }) => {
+          {sortedPlayers.map(({ player, seasonStats, statsError }) => {
             const statValues = [
               average(seasonStats.minutespg, seasonStats.gamesPlayed),
               shootingAverage(seasonStats.fgmpg, seasonStats.fgapg, seasonStats.gamesPlayed),
@@ -66,8 +66,9 @@ export default function PlayerTable({ players, seasonLabel, isUpdating = false, 
                 key={player.id}
                 onClick={() => !isUpdating && onSelect(player.id)}
               >
-                <th scope="row">
+                <th scope="row" title={statsError}>
                   <button type="button" className="player-table-name" disabled={isUpdating} aria-haspopup="dialog">{player.firstName} {player.lastName}</button>
+                  {statsError && <span className="player-stats-error"> Stats unavailable</span>}
                 </th>
                 <td>{player.team.abbreviation || '—'}</td>
                 <td>{player.position || '—'}</td>

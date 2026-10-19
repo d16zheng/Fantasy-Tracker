@@ -18,21 +18,27 @@ export async function getPlayerGameLog(
     const currentSeasonEndYear = getCurrentSeasonEndYear();
     
     const isHistorical = seasonEndYear < currentSeasonEndYear;
-    const oneDayMs = 24 * 60 * 60 * 1000;
+    const oneHourMs = 60 * 60 * 1000;
 
     const isFresh = 
         lastFetched !== null &&
         (isHistorical ||
-            Date.now() - lastFetched.getTime() < oneDayMs);
+            Date.now() - lastFetched.getTime() < oneHourMs);
 
     if (isFresh) {
         return findGameLog(playerId, seasonEndYear);
     }
         
-    const response = await fetchEspnGameLog(
-        espnPlayerId,
-        seasonEndYear
-    );
+    let response: Awaited<ReturnType<typeof fetchEspnGameLog>>;
+    try {
+        response = await fetchEspnGameLog(espnPlayerId, seasonEndYear);
+    } catch (error) {
+        const cachedGameLog = await findGameLog(playerId, seasonEndYear);
+        if (cachedGameLog.length > 0) {
+            return cachedGameLog;
+        }
+        throw error;
+    }
 
     const gameLog = mapEspnGameLog(
         response,

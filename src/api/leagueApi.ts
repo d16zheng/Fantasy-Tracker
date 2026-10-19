@@ -1,11 +1,18 @@
-export type LeaguePlayer = { espnPlayerId: string; firstName: string; lastName: string; position?: string; nbaTeamAbbreviation?: string };
-export type LeagueTeam = { teamId: string; name: string; owner: string; players: LeaguePlayer[] };
-export type League = { leagueId: string; seasonId: number; teams: LeagueTeam[] };
+import type {
+  EspnRosterPlayer as LeaguePlayer,
+  FantasyLeague as League,
+  FantasyLeagueTeam as LeagueTeam,
+} from '../../shared/types/fantasy';
 
-export async function getLeague(leagueId: string, teamCount: number, signal?: AbortSignal): Promise<League> {
-  const params = new URLSearchParams({ leagueId, teamCount: String(teamCount) });
+export type { League, LeagueTeam, LeaguePlayer };
+
+export async function getLeague(leagueId: string, signal?: AbortSignal): Promise<League> {
+  const params = new URLSearchParams({ leagueId });
   const response = await fetch(`/api/fantasy/league?${params}`, { signal });
-  if (!response.ok) throw new Error('Could not load this league. Check the league ID and try again.');
+  if (!response.ok) {
+    const body = await response.json().catch(() => null) as { error?: string } | null;
+    throw new Error(body?.error ?? 'Could not load this league. Check the league ID and try again.');
+  }
   return response.json();
 }
 

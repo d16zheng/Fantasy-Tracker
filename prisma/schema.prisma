@@ -50,18 +50,11 @@ model GameLogSync {
   @@id([playerId, seasonEndYear])
 }
 
-model FantasyTeamOwner {
-  leagueId String
-  teamId   Int
-  owner    String
-
-  @@id([leagueId, teamId])
-}
-
 model FantasyLeagueTeam {
   leagueId   String
   teamId     Int
   name       String
+  owner      String   @default("")
   rosterJson String
   updatedAt  DateTime @updatedAt
 

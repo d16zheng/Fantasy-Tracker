@@ -14,3 +14,16 @@ export type EspnRosterPlayer = {
     nbaTeamAbbreviation?: string;
 
 };
+
+export type FantasyLeagueTeam = {
+    teamId: string;
+    name: string;
+    owner: string;
+    players: EspnRosterPlayer[];
+};
+
+export type FantasyLeague = {
+    leagueId: string;
+    seasonId: number;
+    teams: FantasyLeagueTeam[];
+};
