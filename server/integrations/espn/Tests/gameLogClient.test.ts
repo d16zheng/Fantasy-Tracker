@@ -30,6 +30,10 @@ describe("fetchEspnGameLog", () => {
             rpg: 0,
             apg: 0,
             minutespg: 0,
+            fgmpg: 0,
+            fgapg: 0,
+            ftmpg: 0,
+            ftapg: 0,
         });
     });
 

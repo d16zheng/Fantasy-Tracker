@@ -35,10 +35,16 @@ export function calculateSeasonStats(
         gamesPlayed,
         minutespg: average("minutes"),
 
+        fgmpg: average("fgm"),
+        fgapg: average("fga"),
+
         fgPercentage: percentage(
             total("fgm"),
             total("fga")
         ),
+
+        ftmpg: average("ftm"),
+        ftapg: average("fta"),
         
         ftPercentage: percentage(
             total("ftm"),

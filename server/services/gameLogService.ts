@@ -18,11 +18,12 @@ export async function getPlayerGameLog(
     const currentSeasonEndYear = getCurrentSeasonEndYear();
     
     const isHistorical = seasonEndYear < currentSeasonEndYear;
+    const oneDayMs = 24 * 60 * 60 * 1000;
 
     const isFresh = 
         lastFetched !== null &&
         (isHistorical ||
-            Date.now() - lastFetched.getTime() < 60 * 60 * 1000);
+            Date.now() - lastFetched.getTime() < oneDayMs);
 
     if (isFresh) {
         return findGameLog(playerId, seasonEndYear);

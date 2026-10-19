@@ -7,6 +7,7 @@ export type EspnPlayerResponse = {
     lastName?: string;
 
     defaultPositionId: number;
+    eligibleSlots?: number[];
 };
 
 export type EspnRosterEntryResponse = {
@@ -17,6 +18,9 @@ export type EspnRosterEntryResponse = {
 
 export type EspnTeamResponse = {
     id: number;
+    name?: string;
+    owners?: string[];
+    owner?: string;
 
     roster?: {
         entries: EspnRosterEntryResponse[];

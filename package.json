@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:server": "tsx watch server/index.ts",
+    "dev": "node scripts/dev.mjs",
+    "dev:vite": "vite",
+    "dev:server": "node --import tsx server/index.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "vitest run",

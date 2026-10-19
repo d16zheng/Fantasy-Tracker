@@ -29,7 +29,13 @@ export type SeasonStats = {
 
     minutespg: number;
 
+    fgmpg: number;
+    fgapg: number;
+
     fgPercentage: number;
+
+    ftmpg: number;
+    ftapg: number;
     ftPercentage: number;
     threepmpg: number;
 

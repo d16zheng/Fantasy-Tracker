@@ -13,6 +13,32 @@ function mapEspnPosition(positionId: number): string | undefined{
     return positions[positionId];
 }
 
+function mapEspnEligibleSlot(slotId: number): string | undefined {
+    const positions: Record<number, string> = {
+        0: "PG",
+        1: "SG",
+        2: "SF",
+        3: "PF",
+        4: "C",
+    };
+
+    return positions[slotId];
+}
+
+function mapEspnEligiblePositions(player: EspnPlayerResponse): string | undefined {
+    const eligiblePositions = [...new Set(
+        (player.eligibleSlots ?? [])
+            .map(mapEspnEligibleSlot)
+            .filter((position): position is string => position !== undefined)
+    )];
+
+    if (eligiblePositions.length > 0) {
+        return eligiblePositions.join(" / ");
+    }
+
+    return mapEspnPosition(player.defaultPositionId);
+}
+
 function mapEspnTeam(teamId?: number): string | undefined {
     if (teamId === undefined) {
         return undefined;
@@ -63,7 +89,7 @@ export function mapEspnPlayer(
         firstName: player.firstName ?? "",
         lastName: player.lastName ?? "",
 
-        position: mapEspnPosition(player.defaultPositionId),
+        position: mapEspnEligiblePositions(player),
         nbaTeamAbbreviation: mapEspnTeam(player.proTeamId),
     };
 }

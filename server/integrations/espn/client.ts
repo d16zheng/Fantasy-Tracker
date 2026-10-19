@@ -33,3 +33,15 @@ export async function fetchEspnRoster(
 
     return (await response.json()) as EspnRosterResponse;
 }
+
+export async function fetchEspnLeague(leagueId: string, seasonId: number): Promise<EspnRosterResponse> {
+    const url = `${ESPN_FANTASY_BASE_URL}/games/fba/seasons/${seasonId}/segments/0/leagues/${leagueId}?view=mTeam&view=mRoster`;
+    const response = await fetch(url, {
+        headers: {
+            Accept: "application/json",
+            Cookie: [`SWID=${process.env.ESPN_SWID ?? ""}`, `espn_s2=${process.env.ESPN_S2 ?? ""}`].join("; "),
+        },
+    });
+    if (!response.ok) throw new Error(`ESPN request failed: ${response.status} ${response.statusText}`);
+    return (await response.json()) as EspnRosterResponse;
+}
