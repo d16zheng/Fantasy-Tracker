@@ -5,7 +5,8 @@ Simple React and TypeScript MVP for loading an ESPN fantasy basketball roster an
 ## Project structure
 
 - `src/api/statsApi.ts` — requests to the local stats API
-- `src/components/PlayerTable.tsx` — player season averages
+- `src/components/PlayerCards.tsx` — clickable player cards with season averages
+- `src/components/PlayerDetails.tsx` — full season stats and game logs
 - `src/pages/RosterPage.tsx` — team form, request state, search, and sorting
 - `src/App.tsx`, `src/main.tsx`, `src/index.css` — application entrypoints and styles
 - `shared/types` — types shared by React and Express
@@ -30,9 +31,11 @@ Simple React and TypeScript MVP for loading an ESPN fantasy basketball roster an
 
 Open the URL printed by Vite (normally `http://localhost:5173`). Vite forwards `/api` requests to Express on port 3001. If you change the API port with `PORT`, also update the target in `vite.config.ts`.
 
-Enter the `leagueId` and `teamId` from your ESPN fantasy team URL. The season is its ending year: use `2026` for 2025–26. Click **Load roster**, then search by player name or sort by name or points per game. Players without recorded games show a dash for averages.
+Enter the `leagueId` and `teamId` from your ESPN fantasy team URL. Click **Load roster**, then search by player name or sort by name or points per game. Select a card to open all available season stats and game logs; close with the Close button or Escape.
 
-The first request fetches game logs; later requests use the backend cache when fresh. Player detail pages and charts are deferred beyond this MVP.
+The stats dropdown includes the current season and the previous three seasons (2026–27 through 2023–24 as of October 2026). Changing it loads historical stats for your **current-season roster**. Players without games display “No stats available for this season.” The first request fetches game logs; later requests use the backend cache when fresh. Opening player details needs no additional request.
+
+`GET /api/stats/roster?leagueId=123&teamId=5&seasonEndYear=2025` loads the current fantasy roster with 2024–25 player stats. The server determines the roster season automatically using a July rollover; `seasonEndYear` must be an integer from 1947 through the current season's ending year. No database migration is needed.
 
 ## Checks
 

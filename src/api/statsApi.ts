@@ -1,14 +1,19 @@
-import type { EspnFantasyTeam } from '../../shared/types/fantasy';
 import type { PlayerSeasonSummary } from '../../shared/types/playerStats';
 
+export type RosterStatsRequest = {
+  leagueId: string;
+  teamId: string;
+  seasonEndYear: number;
+};
+
 export async function getRosterStats(
-  team: EspnFantasyTeam,
+  team: RosterStatsRequest,
   signal?: AbortSignal,
 ): Promise<PlayerSeasonSummary[]> {
   const params = new URLSearchParams({
     leagueId: String(team.leagueId).trim(),
     teamId: String(team.teamId),
-    seasonId: String(team.seasonId),
+    seasonEndYear: String(team.seasonEndYear),
   });
 
   const response = await fetch(`/api/stats/roster?${params}`, { signal });

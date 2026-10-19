@@ -2,17 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { PlayerSeasonSummary } from '../../shared/types/playerStats';
 import { getRosterStats } from '../api/statsApi';
-import PlayerTable from '../components/PlayerTable';
+import PlayerCards from '../components/PlayerCards';
+import PlayerDetails from '../components/PlayerDetails';
+import { formatSeason, getCurrentSeasonEndYear } from '../../shared/season';
 
-const today = new Date();
-const defaultSeason = today.getFullYear() + (today.getMonth() >= 6 ? 1 : 0);
+const defaultSeason = getCurrentSeasonEndYear();
+const seasons = Array.from({ length: 4 }, (_, index) => defaultSeason - index);
+type TeamSelection = { leagueId: string; teamId: string };
 
 export default function RosterPage() {
   const [leagueId, setLeagueId] = useState('');
   const [teamId, setTeamId] = useState('');
-  const [seasonId, setSeasonId] = useState(String(defaultSeason));
+  const [seasonEndYear, setSeasonEndYear] = useState(defaultSeason);
+  const [loadedTeam, setLoadedTeam] = useState<TeamSelection | null>(null);
   const [players, setPlayers] = useState<PlayerSeasonSummary[] | null>(null);
-  const [loadedSeason, setLoadedSeason] = useState('');
+  const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
@@ -21,21 +25,19 @@ export default function RosterPage() {
 
   useEffect(() => () => request.current?.abort(), []);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function loadRoster(team: TeamSelection, statsSeason: number) {
     request.current?.abort();
     const controller = new AbortController();
     request.current = controller;
     setLoading(true);
     setError('');
     setPlayers(null);
+    setSelectedPlayerId(null);
 
     try {
-      const roster = await getRosterStats({ leagueId, teamId, seasonId }, controller.signal);
+      const roster = await getRosterStats({ ...team, seasonEndYear: statsSeason }, controller.signal);
       if (controller.signal.aborted) return;
       setPlayers(roster);
-      setLoadedSeason(`${Number(seasonId) - 1}–${seasonId}`);
-      setSearch('');
     } catch (error) {
       if (controller.signal.aborted) return;
       setError(error instanceof Error ? error.message : 'Could not load your roster. Please try again.');
@@ -43,6 +45,21 @@ export default function RosterPage() {
       if (!controller.signal.aborted) setLoading(false);
     }
   }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const team = { leagueId: leagueId.trim(), teamId };
+    setLoadedTeam(team);
+    setSearch('');
+    void loadRoster(team, seasonEndYear);
+  }
+
+  function changeSeason(season: number) {
+    setSeasonEndYear(season);
+    if (loadedTeam) void loadRoster(loadedTeam, season);
+  }
+
+  const selectedPlayer = players?.find(({ player }) => player.id === selectedPlayerId);
 
   const filteredPlayers = (players ?? [])
     .filter(({ player }) => `${player.firstName} ${player.lastName}`.toLowerCase().includes(search.trim().toLowerCase()))
@@ -71,14 +88,10 @@ export default function RosterPage() {
               Team ID
               <input required type="number" min="1" step="1" placeholder="e.g. 5" value={teamId} onChange={(event) => setTeamId(event.target.value)} />
             </label>
-            <label>
-              Season end year
-              <input required type="number" min="1947" max={defaultSeason + 1} step="1" aria-describedby="season-help" value={seasonId} onChange={(event) => setSeasonId(event.target.value)} />
-            </label>
             <button type="submit">{loading ? 'Loading…' : 'Load roster'}</button>
           </fieldset>
         </form>
-        <p className="help" id="season-help">Find leagueId and teamId in your ESPN team URL. For the 2025–26 season, enter 2026.</p>
+        <p className="help">Find leagueId and teamId in your ESPN team URL. Your roster always comes from the current {formatSeason(defaultSeason)} fantasy season.</p>
       </section>
 
       {error && <p className="error" role="alert">{error}</p>}
@@ -87,10 +100,18 @@ export default function RosterPage() {
         <div className="roster-header">
           <div>
             <h2 id="roster-heading">Your roster</h2>
-            <p className="help">{players ? `${loadedSeason} · ${players.length} players · Regular season` : 'Player statistics will appear here.'}</p>
+            <p className="help">{players ? `${players.length} players · ${formatSeason(seasonEndYear)} regular-season stats` : 'Player statistics will appear here.'}</p>
+            {loadedTeam && <p className="help">League {loadedTeam.leagueId} · Team {loadedTeam.teamId} · Current-season roster</p>}
           </div>
+          <label className="season-select">
+            Stats season
+            <select value={seasonEndYear} onChange={(event) => changeSeason(Number(event.target.value))}>
+              {seasons.map((season) => <option key={season} value={season}>{formatSeason(season)}{season === defaultSeason ? ' (current)' : ''}</option>)}
+            </select>
+          </label>
+        </div>
           {players && players.length > 0 && (
-            <div className="table-controls">
+            <div className="roster-controls">
               <label>
                 <span className="sr-only">Search players</span>
                 <input type="search" placeholder="Search players…" value={search} onChange={(event) => setSearch(event.target.value)} />
@@ -104,21 +125,23 @@ export default function RosterPage() {
               </label>
             </div>
           )}
-        </div>
 
         {loading ? (
-          <div className="empty-state" role="status"><h3>Loading your roster…</h3><p>The first load may take a moment while player stats are fetched.</p></div>
+          <div className="empty-state" role="status"><h3>Loading {formatSeason(seasonEndYear)} stats…</h3><p>The first load may take a moment while player stats are fetched.</p></div>
+        ) : error && loadedTeam ? (
+          <div className="empty-state"><h3>Stats could not be loaded</h3><p>Try again or choose another stats season.</p><button className="retry-button" onClick={() => void loadRoster(loadedTeam, seasonEndYear)}>Retry</button></div>
         ) : players === null ? (
           <div className="empty-state"><h3>No roster loaded yet</h3><p>Enter your team details above to get started.</p></div>
         ) : players.length === 0 ? (
-          <div className="empty-state" role="status"><h3>No players found</h3><p>Check your team and season, or try a different roster.</p></div>
+          <div className="empty-state" role="status"><h3>No players found</h3><p>Check your league and team IDs, or add players to your current-season roster.</p></div>
         ) : filteredPlayers.length === 0 ? (
           <div className="empty-state" role="status"><h3>No matching players</h3><p>Try another name or clear your search.</p></div>
         ) : (
-          <PlayerTable players={filteredPlayers} />
+          <PlayerCards players={filteredPlayers} onSelect={setSelectedPlayerId} />
         )}
-        {players && players.length > 0 && <p className="table-note">GP: games played · PPG: points · RPG: rebounds · APG: assists · MPG: minutes per game. A dash means no games recorded.</p>}
+        {players && players.length > 0 && <p className="table-note">PPG: points · RPG: rebounds · APG: assists per game. Select a player for full stats and game logs. A dash means no games recorded.</p>}
       </section>
+      {selectedPlayer && <PlayerDetails summary={selectedPlayer} seasonEndYear={seasonEndYear} onClose={() => setSelectedPlayerId(null)} />}
       <footer>Stats provided by ESPN.</footer>
     </main>
   );

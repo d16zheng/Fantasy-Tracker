@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getPlayerGameLog } from "../services/gameLogService";
 import { getRosterPlayerStats } from "../services/playerStatsService";
+import { getCurrentSeasonEndYear } from "../../shared/season";
 
 const router = Router()
 
@@ -44,38 +45,41 @@ router.get("/gamelog", async (req, res) => {
 
 router.get("/roster", async (req, res) =>{
     try {
-        const {leagueId, teamId, seasonId} = req.query;
+        const {leagueId, teamId, seasonEndYear} = req.query;
 
         if (
             typeof leagueId !== "string" ||
             typeof teamId !== "string" ||
-            typeof seasonId !== "string"
+            typeof seasonEndYear !== "string"
         ) {
             return res.status(400).json({
-                error: "leagueId, teamId, and seasonId are required",
+                error: "leagueId, teamId, and seasonEndYear are required",
             });
         }
 
         const team = Number(teamId);
-        const season = Number(seasonId);
+        const season = Number(seasonEndYear);
+        const currentRosterSeason = getCurrentSeasonEndYear();
         
         if (
-            !leagueId.trim() ||
-            !Number.isInteger(team) ||
+            !/^\d+$/.test(leagueId.trim()) ||
+            !Number.isSafeInteger(team) ||
             team <= 0 ||
+            !/^\d{4}$/.test(seasonEndYear) ||
             !Number.isInteger(season) ||
-            season < 1947
+            season < 1947 ||
+            season > currentRosterSeason
         ) {
             return res.status(400).json({
-                error: "Invalid Fantasy Team Parameters",
+                error: `Invalid leagueId, teamId, or seasonEndYear (expected 1947–${currentRosterSeason})`,
             });
         }
 
         const playerStats = await getRosterPlayerStats(
             {
-                leagueId,
+                leagueId: leagueId.trim(),
                 teamId: team,
-                seasonId: season
+                seasonId: currentRosterSeason
             },
             season
         );

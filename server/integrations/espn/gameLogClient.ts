@@ -11,11 +11,21 @@ function parseGameLogResponse(value: unknown): EspnGameLogResponse {
         throw new Error("Invalid ESPN game-log response");
     }
 
-    const data = value as Partial<EspnGameLogResponse>;
+    const data = value as Record<string, unknown>;
 
     if (
-        "filters" in value &&
-        !("seasonTypes" in value)
+        Object.keys(data).every((key) => key === 'filters') &&
+        Array.isArray(data.filters) &&
+        data.filters.some((filter: unknown) =>
+            typeof filter === 'object' && filter !== null &&
+            'name' in filter && filter.name === 'league' &&
+            'value' in filter && filter.value === 'nba' &&
+            'options' in filter && Array.isArray(filter.options) &&
+            filter.options.some((option: unknown) =>
+                typeof option === 'object' && option !== null &&
+                'value' in option && option.value === 'nba'
+            )
+        )
     ) {
         return {
             names: [],
@@ -24,11 +34,15 @@ function parseGameLogResponse(value: unknown): EspnGameLogResponse {
         }
     }
     if (
-        !Array.isArray(data) ||
-        !data.events ||
-        !Array.isArray(data.seasonTypes)
+        !Array.isArray(data.names) ||
+        !data.names.every((name) => typeof name === 'string') ||
+        typeof data.events !== 'object' || data.events === null || Array.isArray(data.events) ||
+        !Array.isArray(data.seasonTypes) ||
+        !data.seasonTypes.every((seasonType) =>
+            typeof seasonType === 'object' && seasonType !== null && !Array.isArray(seasonType)
+        )
     ) {
-        throw new Error("Missing ESPN game-log data")
+        throw new Error("Invalid ESPN game-log response")
     }
 
     return data as EspnGameLogResponse

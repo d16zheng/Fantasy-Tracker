@@ -2,6 +2,7 @@ import type { GamePerformance } from "../../shared/types/stats";
 import { fetchEspnGameLog } from "../integrations/espn/gameLogClient";
 import { mapEspnGameLog } from "../integrations/espn/gameLogMapper";
 import { findGameLog, getGameLogLastFetched, saveGameLog } from "../repositories/gameLogRepository";
+import { getCurrentSeasonEndYear } from "../../shared/season";
 
 export async function getPlayerGameLog(
     playerId: string,
@@ -14,10 +15,7 @@ export async function getPlayerGameLog(
         seasonEndYear
     );
 
-    const currentSeasonEndYear = 
-        new Date().getMonth() >= 6
-        ? new Date().getFullYear() + 1
-        : new Date().getFullYear();
+    const currentSeasonEndYear = getCurrentSeasonEndYear();
     
     const isHistorical = seasonEndYear < currentSeasonEndYear;
 
