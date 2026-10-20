@@ -1,3 +1,3 @@
 export type Team = {
-    abbreviation: string;
+  abbreviation: string;
 };

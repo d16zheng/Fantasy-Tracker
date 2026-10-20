@@ -3,64 +3,64 @@ import type { Team } from "./team";
 export type SeasonPhase = "regular" | "postseason";
 
 export type GameStats = {
-    minutes: number;
+  minutes: number;
 
-    fgm: number;
-    fga: number;
+  fgm: number;
+  fga: number;
 
-    ftm: number;
-    fta: number;
+  ftm: number;
+  fta: number;
 
-    threepm: number;
-    threepa: number;
+  threepm: number;
+  threepa: number;
 
-    rebounds: number;
-    assists: number;
-    steals: number;
-    blocks: number;
-    to: number;
-    points: number;
+  rebounds: number;
+  assists: number;
+  steals: number;
+  blocks: number;
+  to: number;
+  points: number;
 };
 
 export type SeasonStats = {
-    playerId: string;
-    season: string;
-    gamesPlayed: number;
+  playerId: string;
+  season: string;
+  gamesPlayed: number;
 
-    minutespg: number;
+  minutespg: number;
 
-    fgmpg: number;
-    fgapg: number;
+  fgmpg: number;
+  fgapg: number;
 
-    fgPercentage: number;
+  fgPercentage: number;
 
-    ftmpg: number;
-    ftapg: number;
-    ftPercentage: number;
-    threepmpg: number;
+  ftmpg: number;
+  ftapg: number;
+  ftPercentage: number;
+  threepmpg: number;
 
-    rpg: number;
-    apg: number;
+  rpg: number;
+  apg: number;
 
-    spg: number;
-    bpg: number;
-    topg: number;
+  spg: number;
+  bpg: number;
+  topg: number;
 
-    ppg: number;
+  ppg: number;
 };
 
 export type GamePerformance = GameStats & {
-    id: string;
-    playerId: string;
+  id: string;
+  playerId: string;
 
-    espnEventId: string;
+  espnEventId: string;
 
-    seasonEndYear: number;
-    phase: SeasonPhase;
+  seasonEndYear: number;
+  phase: SeasonPhase;
 
-    date: string;
+  date: string;
 
-    playerTeam: Team;
-    opponent: Team;
-    isHome: boolean;
+  playerTeam: Team;
+  opponent: Team;
+  isHome: boolean;
 };

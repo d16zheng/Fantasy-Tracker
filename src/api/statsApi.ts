@@ -1,4 +1,4 @@
-import type { PlayerSeasonSummary } from '../../shared/types/playerStats';
+import type { PlayerSeasonSummary } from "../../shared/types/playerStats";
 
 export type RosterStatsRequest = {
   leagueId: string;
@@ -18,7 +18,9 @@ export async function getRosterStats(
 
   const response = await fetch(`/api/stats/roster?${params}`, { signal });
   if (!response.ok) {
-    throw new Error('Could not load your roster. Check your league, team, and season, then try again.');
+    throw new Error(
+      "Could not load your roster. Check your league, team, and season, then try again.",
+    );
   }
 
   return response.json();

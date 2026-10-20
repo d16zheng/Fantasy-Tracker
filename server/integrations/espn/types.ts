@@ -1,30 +1,30 @@
 export type EspnPlayerResponse = {
-    id: number;
-    proTeamId: number;
+  id: number;
+  proTeamId: number;
 
-    fullName: string;
-    firstName?: string;
-    lastName?: string;
+  fullName: string;
+  firstName?: string;
+  lastName?: string;
 
-    defaultPositionId: number;
-    eligibleSlots?: number[];
+  defaultPositionId: number;
+  eligibleSlots?: number[];
 };
 
 export type EspnRosterEntryResponse = {
-    playerPoolEntry: {
-        player: EspnPlayerResponse
-    };
+  playerPoolEntry: {
+    player: EspnPlayerResponse;
+  };
 };
 
 export type EspnTeamResponse = {
-    id: number;
-    name?: string;
+  id: number;
+  name?: string;
 
-    roster?: {
-        entries: EspnRosterEntryResponse[];
-    };
+  roster?: {
+    entries: EspnRosterEntryResponse[];
+  };
 };
 
 export type EspnRosterResponse = {
-    teams: EspnTeamResponse[];
+  teams: EspnTeamResponse[];
 };

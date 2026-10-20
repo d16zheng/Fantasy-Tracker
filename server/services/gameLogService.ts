@@ -5,52 +5,38 @@ import { findGameLog, getGameLogLastFetched, saveGameLog } from "../repositories
 import { getCurrentSeasonEndYear } from "../../shared/season";
 
 export async function getPlayerGameLog(
-    playerId: string,
-    espnPlayerId: string,
-    seasonEndYear: number
+  playerId: string,
+  espnPlayerId: string,
+  seasonEndYear: number,
 ): Promise<GamePerformance[]> {
-    
-    const lastFetched = await getGameLogLastFetched(
-        playerId,
-        seasonEndYear
-    );
+  const lastFetched = await getGameLogLastFetched(playerId, seasonEndYear);
 
-    const currentSeasonEndYear = getCurrentSeasonEndYear();
-    
-    const isHistorical = seasonEndYear < currentSeasonEndYear;
-    const oneHourMs = 60 * 60 * 1000;
+  const currentSeasonEndYear = getCurrentSeasonEndYear();
 
-    const isFresh = 
-        lastFetched !== null &&
-        (isHistorical ||
-            Date.now() - lastFetched.getTime() < oneHourMs);
+  const isHistorical = seasonEndYear < currentSeasonEndYear;
+  const oneHourMs = 60 * 60 * 1000;
 
-    if (isFresh) {
-        return findGameLog(playerId, seasonEndYear);
+  const isFresh =
+    lastFetched !== null && (isHistorical || Date.now() - lastFetched.getTime() < oneHourMs);
+
+  if (isFresh) {
+    return findGameLog(playerId, seasonEndYear);
+  }
+
+  let response: Awaited<ReturnType<typeof fetchEspnGameLog>>;
+  try {
+    response = await fetchEspnGameLog(espnPlayerId, seasonEndYear);
+  } catch (error) {
+    const cachedGameLog = await findGameLog(playerId, seasonEndYear);
+    if (cachedGameLog.length > 0) {
+      return cachedGameLog;
     }
-        
-    let response: Awaited<ReturnType<typeof fetchEspnGameLog>>;
-    try {
-        response = await fetchEspnGameLog(espnPlayerId, seasonEndYear);
-    } catch (error) {
-        const cachedGameLog = await findGameLog(playerId, seasonEndYear);
-        if (cachedGameLog.length > 0) {
-            return cachedGameLog;
-        }
-        throw error;
-    }
+    throw error;
+  }
 
-    const gameLog = mapEspnGameLog(
-        response,
-        playerId,
-        seasonEndYear
-    );
+  const gameLog = mapEspnGameLog(response, playerId, seasonEndYear);
 
-    await saveGameLog(
-        playerId,
-        seasonEndYear,
-        gameLog
-    );
+  await saveGameLog(playerId, seasonEndYear, gameLog);
 
-    return gameLog;
+  return gameLog;
 }
