@@ -1,4 +1,8 @@
-import type { ComparisonResult, MatchupResult } from "../../shared/types/matchup";
+import type {
+  ComparisonResult,
+  MatchupResult,
+  WeeklyProjectionResult,
+} from "../../shared/types/matchup";
 
 export type ComparisonRequest = {
   leagueId: string;
@@ -39,4 +43,23 @@ export function getWeeklyMatchup(
   signal?: AbortSignal,
 ): Promise<MatchupResult> {
   return fetchResult(`/api/matchup?${queryString(request)}`, signal);
+}
+
+export function getWeeklyProjection(
+  request: MatchupRequest,
+  signal?: AbortSignal,
+): Promise<WeeklyProjectionResult> {
+  return fetchResult(`/api/matchup/projection?${queryString(request)}`, signal);
+}
+
+export function getTeamScheduledGames(
+  startDate: string,
+  endDate: string,
+  nbaTeamAbbreviation: string,
+  signal?: AbortSignal,
+): Promise<{ nbaTeamAbbreviation: string; scheduledGames: number }> {
+  return fetchResult(
+    `/api/matchup/schedule?${queryString({ startDate, endDate, nbaTeamAbbreviation })}`,
+    signal,
+  );
 }

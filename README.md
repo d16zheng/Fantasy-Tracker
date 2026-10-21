@@ -17,19 +17,13 @@ Simple React and TypeScript MVP for loading an ESPN fantasy basketball roster an
 1. Run `npm install`.
 2. Create a local `.env` from `.env.example` if one does not already exist. Set `DATABASE_URL="file:./dev.db"` and provide your ESPN cookies for private leagues. These credentials stay on the server.
 3. Run `npx prisma generate` and `npx prisma migrate deploy` to prepare the database.
-4. Start the API in one terminal:
-
-   ```sh
-   npm run dev:server
-   ```
-
-5. Start React in a second terminal:
+4. Start the API and frontend together:
 
    ```sh
    npm run dev
    ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Vite forwards `/api` requests to Express on port 3001. If you change the API port with `PORT`, also update the target in `vite.config.ts`.
+Open the local URL printed by Vite (normally `http://localhost:5173`). To open the app from another device on the same network, use the Network URL Vite prints. Vite forwards `/api` requests to Express on port 3001. If you change the API port with `PORT`, also update the target in `vite.config.ts`.
 
 Enter the `leagueId` and `teamId` from your ESPN fantasy team URL. Click **Load roster**, then search by player name or sort by name or points per game. Select a card to open all available season stats and game logs; close with the Close button or Escape.
 

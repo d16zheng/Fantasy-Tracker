@@ -2,6 +2,8 @@ import { Router } from "express";
 
 import { getTeamComparison } from "../services/teamComparisonService";
 import { getWeeklyMatchup } from "../services/matchupService";
+import { getWeeklyProjection } from "../services/weeklyProjectionService";
+import { getWeeklyGameCounts, normalizeTeam } from "../services/scheduleService";
 
 const router = Router();
 
@@ -69,6 +71,63 @@ router.get("/comparison", async (req, res) => {
     return res.status(500).json({
       error: "Failed to compare teams",
     });
+  }
+});
+
+// Project the selected teams' season averages across each player's scheduled games.
+router.get("/projection", async (req, res) => {
+  const request = parseComparison(req.query);
+  const startDate = singleString(req.query.startDate);
+  const endDate = singleString(req.query.endDate);
+
+  if (
+    !request ||
+    !startDate ||
+    !endDate ||
+    !isValidDate(startDate) ||
+    !isValidDate(endDate) ||
+    startDate > endDate
+  ) {
+    return res.status(400).json({ error: "Invalid weekly projection parameters" });
+  }
+
+  try {
+    const result = await getWeeklyProjection({ ...request, startDate, endDate });
+    return res.json(result);
+  } catch (error) {
+    console.error("Failed to project weekly team stats:", error);
+    return res.status(500).json({ error: "Failed to project weekly team stats" });
+  }
+});
+
+// A player prediction can request scheduled games without needing an opponent.
+router.get("/schedule", async (req, res) => {
+  const startDate = singleString(req.query.startDate);
+  const endDate = singleString(req.query.endDate);
+  const rawTeam = singleString(req.query.nbaTeamAbbreviation);
+
+  if (
+    !startDate ||
+    !endDate ||
+    !rawTeam ||
+    !isValidDate(startDate) ||
+    !isValidDate(endDate) ||
+    startDate > endDate ||
+    !/^[a-z]{2,3}$/i.test(rawTeam)
+  ) {
+    return res.status(400).json({ error: "Invalid schedule parameters" });
+  }
+
+  try {
+    const nbaTeamAbbreviation = normalizeTeam(rawTeam);
+    const gameCounts = await getWeeklyGameCounts(startDate, endDate);
+    return res.json({
+      nbaTeamAbbreviation,
+      scheduledGames: gameCounts[nbaTeamAbbreviation] ?? 0,
+    });
+  } catch (error) {
+    console.error("Failed to fetch NBA schedule:", error);
+    return res.status(500).json({ error: "Failed to fetch NBA schedule" });
   }
 });
 

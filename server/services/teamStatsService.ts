@@ -4,7 +4,7 @@ import type {
   SummedStatKey,
   TeamCategoryTotals,
 } from "../../shared/types/matchup";
-import type { GamePerformance } from "../../shared/types/stats";
+import type { GamePerformance, GameStats } from "../../shared/types/stats";
 
 const categories: MatchupCategory[] = [
   "fgPercentage",
@@ -30,6 +30,12 @@ const statKeys: SummedStatKey[] = [
   "steals",
   "blocks",
   "to",
+];
+
+const averageStatKeys: (keyof GameStats)[] = [
+  "minutes",
+  ...statKeys,
+  "threepa",
 ];
 
 function emptyTotals(): TeamCategoryTotals {
@@ -74,20 +80,33 @@ export function calculateProjectedTotals(
   playerGames: GamePerformance[][],
   gamesMultiplier: number[] = playerGames.map(() => 1),
 ): TeamCategoryTotals {
-  const totals = emptyTotals();
+  const averages: GameStats[] = [];
+  const multipliers: number[] = [];
 
   playerGames.forEach((games, index) => {
-    const regularGames = games.filter((game) => game.phase == "regular");
+    const regularGames = games.filter((game) => game.phase === "regular");
+    if (regularGames.length === 0) return;
 
-    if (regularGames.length == 0) return;
-
-    const multiplier = gamesMultiplier[index];
-
-    for (const stat of statKeys) {
-      const total = regularGames.reduce((sum, game) => sum + game[stat], 0);
-
-      totals[stat] += (total / regularGames.length) * multiplier;
+    const average = {} as GameStats;
+    for (const stat of averageStatKeys) {
+      average[stat] =
+        regularGames.reduce((sum, game) => sum + game[stat], 0) / regularGames.length;
     }
+    averages.push(average);
+    multipliers.push(gamesMultiplier[index] ?? 1);
+  });
+
+  return calculateTotalsFromAverages(averages, multipliers);
+}
+
+export function calculateTotalsFromAverages(
+  playerAverages: GameStats[],
+  gamesMultiplier: number[] = playerAverages.map(() => 1),
+): TeamCategoryTotals {
+  const totals = emptyTotals();
+  playerAverages.forEach((average, index) => {
+    const multiplier = Math.max(0, gamesMultiplier[index] ?? 1);
+    for (const stat of statKeys) totals[stat] += average[stat] * multiplier;
   });
   return finalizePercentages(totals);
 }

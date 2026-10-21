@@ -134,6 +134,7 @@ export default function LeaguePage() {
           League rosters
         </a>
         <a href="/compare">Compare teams</a>
+        <a href="/predict">Player predictions</a>
       </nav>
       <section className="panel" aria-labelledby="league-heading">
         <h2 id="league-heading">Connect your league</h2>

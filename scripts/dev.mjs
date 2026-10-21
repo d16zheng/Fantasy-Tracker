@@ -4,31 +4,37 @@ import process from "node:process";
 
 const console = new Console({ stdout: process.stdout, stderr: process.stderr });
 
-const npm = process.platform === "win32" ? "npm.cmd" : "npm";
-const children = [
-  spawn(npm, ["run", "dev:server"], { stdio: "inherit" }),
-  spawn(npm, ["run", "dev:vite"], { stdio: "inherit" }),
+const node = process.execPath;
+const services = [
+  {
+    name: "API",
+    child: spawn(node, ["--import", "tsx", "server/index.ts"], { stdio: "inherit" }),
+  },
+  {
+    name: "Vite",
+    child: spawn(node, ["node_modules/vite/bin/vite.js"], { stdio: "inherit" }),
+  },
 ];
 
 let stopping = false;
 function stopAll(exitCode = 0) {
   if (stopping) return;
   stopping = true;
-  for (const child of children) {
+  process.exitCode = exitCode;
+  for (const { child } of services) {
     if (child.exitCode === null) child.kill("SIGTERM");
   }
-  process.exitCode = exitCode;
 }
 
-for (const child of children) {
+for (const { name, child } of services) {
   child.on("error", (error) => {
-    console.error("Could not start the development process:", error.message);
+    console.error(`Could not start the ${name} process:`, error.message);
     stopAll(1);
   });
   child.on("exit", (code, signal) => {
     if (!stopping) {
       console.error(
-        `A development process stopped (${signal ?? code ?? "unknown"}); stopping the other process.`,
+        `${name} stopped (${signal ?? `exit code ${code ?? "unknown"}`}); stopping the other process.`,
       );
       stopAll(code ?? 1);
     }

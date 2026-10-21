@@ -1,6 +1,7 @@
 import RosterPage from "./pages/RosterPage";
 import LeaguePage from "./pages/LeaguePage";
 import ComparisonPage from "./pages/ComparisonPage";
+import PlayerPredictionPage from "./pages/PlayerPredictionPage";
 
 export default function App() {
   const match = window.location.pathname.match(/^\/team\/(\d+)\/(\d+)$/);
@@ -19,5 +20,6 @@ export default function App() {
     );
   }
   if (window.location.pathname === "/compare") return <ComparisonPage />;
+  if (window.location.pathname === "/predict") return <PlayerPredictionPage />;
   return <LeaguePage />;
 }

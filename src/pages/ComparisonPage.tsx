@@ -1,15 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PlayerSeasonSummary } from "../../shared/types/playerStats";
-import type { MatchupCategory, MatchupResult } from "../../shared/types/matchup";
+import type {
+  ComparisonResult,
+  MatchupCategory,
+  WeeklyProjectionResult,
+} from "../../shared/types/matchup";
 import { getCurrentSeasonEndYear, formatSeason } from "../../shared/season";
 import { getRosterStats } from "../api/statsApi";
-import { getWeeklyMatchup } from "../api/matchupApi";
+import { getTeamComparison, getWeeklyProjection } from "../api/matchupApi";
 import type { League, LeagueTeam } from "../api/leagueApi";
 import ComparisonTeamTable from "../components/ComparisonTeamTable";
+import SelectedRosterComparison from "../components/SelectedRosterComparison";
 
 const overviewKey = "sports-tracker:league-overview";
 const currentSeason = getCurrentSeasonEndYear();
 const seasons = Array.from({ length: 4 }, (_, index) => currentSeason - index);
+const regularWeeks = 18;
+const playoffWeeks = 4;
+const seasonStart = new Date(Date.UTC(2026, 9, 19));
 const labels: Record<MatchupCategory, string> = {
   fgPercentage: "FG%",
   ftPercentage: "FT%",
@@ -45,14 +53,45 @@ function PlayerAverages({
   return <ComparisonTeamTable team={team} players={players} onSelect={onSelect} />;
 }
 
-function MatchupSummary({ result }: { result: MatchupResult }) {
+type ComparisonMode = "base" | "weekly";
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
+function getComparisonWeeks(seasonEndYear: number) {
+  const seasonOffset = (currentSeason - seasonEndYear) * 364 * 24 * 60 * 60 * 1000;
+  const firstMonday = new Date(seasonStart.getTime() - seasonOffset);
+  return Array.from({ length: regularWeeks + playoffWeeks }, (_, index) => {
+    const start = new Date(firstMonday.getTime() + index * 7 * 24 * 60 * 60 * 1000);
+    const end = new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000);
+    return {
+      number: index + 1,
+      startDate: start.toISOString().slice(0, 10),
+      endDate: end.toISOString().slice(0, 10),
+      label: `Week ${index + 1}${index < regularWeeks ? " · Regular season" : " · Playoffs"} · ${formatDate(start)}–${formatDate(end)}`,
+    };
+  });
+}
+
+function MatchupSummary({
+  result,
+  weeklyProjection,
+}: {
+  result: ComparisonResult;
+  weeklyProjection: WeeklyProjectionResult | null;
+}) {
   const categories = Object.keys(labels) as MatchupCategory[];
   const firstWins = result.categories.filter(({ winner }) => winner === "win").length;
   const secondWins = result.categories.filter(({ winner }) => winner === "lose").length;
   const categoryResult = new Map(
     result.categories.map(({ category, winner }) => [category, winner]),
   );
-  const value = (team: MatchupResult["firstTeam"], category: MatchupCategory) => {
+  const value = (team: ComparisonResult["firstTeam"], category: MatchupCategory) => {
     const amount = team.totals[category];
     return amount == null
       ? "—"
@@ -63,7 +102,9 @@ function MatchupSummary({ result }: { result: MatchupResult }) {
   return (
     <section className="panel matchup-results" aria-live="polite">
       <h2>
-        Weekly category score · {result.startDate} to {result.endDate}
+        {weeklyProjection
+          ? `Projected weekly category score · ${weeklyProjection.startDate} to ${weeklyProjection.endDate}`
+          : `Season projection category score · ${formatSeason(result.seasonEndYear)}`}
       </h2>
       <p className="matchup-scoreline">
         <strong>
@@ -103,6 +144,9 @@ function MatchupSummary({ result }: { result: MatchupResult }) {
           </tbody>
         </table>
       </div>
+      {weeklyProjection && (
+        <p className="help">Weekly totals use ESPN’s scheduled games for each player’s NBA team.</p>
+      )}
       {(result.firstTeam.missingPlayerIds.length > 0 ||
         result.secondTeam.missingPlayerIds.length > 0) && (
         <p className="help">
@@ -143,11 +187,14 @@ export default function ComparisonPage() {
   const [secondPlayers, setSecondPlayers] = useState<PlayerSeasonSummary[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [weekStart, setWeekStart] = useState("");
-  const [weekEnd, setWeekEnd] = useState("");
-  const [matchup, setMatchup] = useState<MatchupResult | null>(null);
+  const [mode, setMode] = useState<ComparisonMode>("base");
+  const [weekNumber, setWeekNumber] = useState(1);
+  const [matchup, setMatchup] = useState<ComparisonResult | null>(null);
+  const [weeklyProjection, setWeeklyProjection] = useState<WeeklyProjectionResult | null>(null);
   const [matchupLoading, setMatchupLoading] = useState(false);
   const [matchupError, setMatchupError] = useState("");
+  const weeks = getComparisonWeeks(seasonEndYear);
+  const selectedWeek = weeks[weekNumber - 1];
   const comparisonRequest = useRef<AbortController | null>(null);
   const matchupRequest = useRef<AbortController | null>(null);
   useEffect(
@@ -209,28 +256,40 @@ export default function ComparisonPage() {
   }, [compare]);
 
   async function loadMatchup() {
-    if (!league || !weekStart || !weekEnd || weekStart > weekEnd) return;
+    if (!league || (mode === "weekly" && !selectedWeek)) return;
     matchupRequest.current?.abort();
     const controller = new AbortController();
     matchupRequest.current = controller;
     setMatchupLoading(true);
     setMatchupError("");
     try {
-      const result = await getWeeklyMatchup(
-        {
-          leagueId: league.leagueId,
-          firstTeamId,
-          secondTeamId,
-          seasonEndYear,
-          startDate: weekStart,
-          endDate: weekEnd,
-        },
-        controller.signal,
-      );
-      if (!controller.signal.aborted) setMatchup(result);
+      const request = {
+        leagueId: league.leagueId,
+        firstTeamId,
+        secondTeamId,
+        seasonEndYear,
+      };
+      if (mode === "weekly") {
+        const result = await getWeeklyProjection(
+          { ...request, startDate: selectedWeek.startDate, endDate: selectedWeek.endDate },
+          controller.signal,
+        );
+        if (!controller.signal.aborted) {
+          setWeeklyProjection(result);
+          setMatchup(result);
+        }
+      } else {
+        const result = await getTeamComparison(request, controller.signal);
+        if (!controller.signal.aborted) {
+          setWeeklyProjection(null);
+          setMatchup(result);
+        }
+      }
     } catch (cause) {
       if (!controller.signal.aborted)
-        setMatchupError(cause instanceof Error ? cause.message : "Could not load weekly matchup.");
+        setMatchupError(
+          cause instanceof Error ? cause.message : "Could not load season comparison.",
+        );
     } finally {
       if (!controller.signal.aborted) setMatchupLoading(false);
     }
@@ -270,6 +329,7 @@ export default function ComparisonPage() {
         <a href="/compare" aria-current="page">
           Compare teams
         </a>
+        <a href="/predict">Player predictions</a>
       </nav>
       {!league || league.teams.length < 2 ? (
         <section className="panel empty-state">
@@ -292,6 +352,7 @@ export default function ComparisonPage() {
                     setFirstPlayers(null);
                     setSecondPlayers(null);
                     setMatchup(null);
+                    setWeeklyProjection(null);
                   }}
                 >
                   {league.teams.map((team) => (
@@ -316,6 +377,7 @@ export default function ComparisonPage() {
                     setFirstPlayers(null);
                     setSecondPlayers(null);
                     setMatchup(null);
+                    setWeeklyProjection(null);
                   }}
                 >
                   {league.teams.map((team) => (
@@ -337,35 +399,39 @@ export default function ComparisonPage() {
               </button>
             </div>
             <p className="help">
-              Player names open their detail page. Weekly matchup totals can be loaded below.
+              Player names open their detail page. Select a stats season before comparing.
             </p>
           </section>
-          {firstPlayers && secondPlayers && (
-            <section className="comparison-season-bar" aria-label="Comparison season">
-              <p>
-                Comparing <strong>{firstTeam?.name}</strong> and <strong>{secondTeam?.name}</strong>
-              </p>
-              <label>
-                Stats season
-                <select
-                  value={seasonEndYear}
-                  disabled={loading}
-                  onChange={(event) => {
-                    const selected = Number(event.target.value);
-                    setSeasonEndYear(selected);
-                    void compare(selected);
-                  }}
-                >
-                  {seasons.map((season) => (
-                    <option key={season} value={season}>
-                      {formatSeason(season)}
-                      {season === currentSeason ? " (current)" : ""}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </section>
-          )}
+          <section className="comparison-season-bar" aria-label="Comparison season">
+            <p>
+              Comparing <strong>{firstTeam?.name}</strong> and <strong>{secondTeam?.name}</strong>
+            </p>
+            <label>
+              Stats season
+              <select
+                value={seasonEndYear}
+                disabled={loading || matchupLoading}
+                onChange={(event) => {
+                  const selected = Number(event.target.value);
+                  setSeasonEndYear(selected);
+                  setMatchup(null);
+                  setWeeklyProjection(null);
+                  if (firstPlayers && secondPlayers) void compare(selected);
+                }}
+              >
+                {seasons.map((season) => (
+                  <option key={season} value={season}>
+                    {formatSeason(season)}
+                    {season === currentSeason
+                      ? " (current)"
+                      : season === currentSeason - 1
+                        ? " (previous)"
+                        : ""}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </section>
           {error && (
             <p className="error" role="alert">
               {error}
@@ -377,51 +443,89 @@ export default function ComparisonPage() {
             </div>
           )}
           {firstPlayers && secondPlayers && firstTeam && secondTeam && (
-            <div className="comparison-grid">
-              <PlayerAverages
-                team={firstTeam}
-                players={firstPlayers}
-                onSelect={(id) => openPlayer(firstTeam, id)}
+            <>
+              <div className="comparison-grid">
+                <PlayerAverages
+                  team={firstTeam}
+                  players={firstPlayers}
+                  onSelect={(id) => openPlayer(firstTeam, id)}
+                />
+                <PlayerAverages
+                  team={secondTeam}
+                  players={secondPlayers}
+                  onSelect={(id) => openPlayer(secondTeam, id)}
+                />
+              </div>
+              <SelectedRosterComparison
+                firstTeam={firstTeam}
+                secondTeam={secondTeam}
+                firstPlayers={firstPlayers}
+                secondPlayers={secondPlayers}
+                seasonEndYear={displayedSeasonEndYear}
+                mode={mode}
+                week={selectedWeek}
+                weeklyProjection={weeklyProjection}
               />
-              <PlayerAverages
-                team={secondTeam}
-                players={secondPlayers}
-                onSelect={(id) => openPlayer(secondTeam, id)}
-              />
-            </div>
+            </>
           )}
           <section className="panel matchup-controls-panel">
-            <h2>Weekly category matchup</h2>
+            <h2>Nine-category comparison</h2>
             <p className="help">
-              Choose inclusive dates to total each team’s games and compare the nine categories.
+              Compare season averages or project weekly totals across one of the season’s 18 regular
+              weeks or 4 playoff weeks. Weeks run Monday through Sunday.
             </p>
             <div className="comparison-controls">
               <label>
-                Week starts
-                <input
-                  type="date"
-                  value={weekStart}
+                Comparison type
+                <select
+                  value={mode}
                   disabled={matchupLoading}
-                  onChange={(event) => setWeekStart(event.target.value)}
-                />
+                  onChange={(event) => {
+                    setMode(event.target.value as ComparisonMode);
+                    setMatchup(null);
+                    setWeeklyProjection(null);
+                  }}
+                >
+                  <option value="base">Base comparison (per-game averages)</option>
+                  <option value="weekly">Projected weekly totals</option>
+                </select>
               </label>
-              <label>
-                Week ends
-                <input
-                  type="date"
-                  value={weekEnd}
-                  disabled={matchupLoading}
-                  onChange={(event) => setWeekEnd(event.target.value)}
-                />
-              </label>
+              {mode === "weekly" && (
+                <label>
+                  Week
+                  <select
+                    value={weekNumber}
+                    disabled={matchupLoading}
+                    onChange={(event) => {
+                      setWeekNumber(Number(event.target.value));
+                      setMatchup(null);
+                      setWeeklyProjection(null);
+                    }}
+                  >
+                    {weeks.map((week) => (
+                      <option key={week.number} value={week.number}>
+                        {week.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
               <button
                 onClick={() => void loadMatchup()}
-                disabled={
-                  matchupLoading || !weekStart || !weekEnd || weekStart > weekEnd || firstTeamId === secondTeamId
-                }
+                disabled={matchupLoading || firstTeamId === secondTeamId}
               >
-                {matchupLoading ? "Calculating…" : "Calculate matchup"}
+                {matchupLoading
+                  ? "Calculating…"
+                  : mode === "weekly"
+                    ? "Load schedule & project"
+                    : "Calculate comparison"}
               </button>
+              {mode === "weekly" && (
+                <p className="help">
+                  ESPN schedule games populate the roster GP fields; you can adjust any player’s
+                  games or stats and the selected 13 totals update immediately.
+                </p>
+              )}
             </div>
           </section>
           {matchupError && (
@@ -429,7 +533,7 @@ export default function ComparisonPage() {
               {matchupError}
             </p>
           )}
-          {matchup && <MatchupSummary result={matchup} />}
+          {matchup && <MatchupSummary result={matchup} weeklyProjection={weeklyProjection} />}
         </>
       )}
       <footer>Player statistics provided by ESPN.</footer>

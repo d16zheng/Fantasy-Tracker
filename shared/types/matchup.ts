@@ -76,3 +76,20 @@ export interface MatchupResult extends ComparisonResult {
   startDate: string;
   endDate: string;
 }
+
+export interface PlayerWeeklyProjection {
+  playerId: string;
+  nbaTeam: string;
+  scheduledGames: number;
+}
+
+export interface WeeklyProjectionTeamResult extends MatchupTeamResult {
+  players: PlayerWeeklyProjection[];
+}
+
+export interface WeeklyProjectionResult extends ComparisonResult {
+  startDate: string;
+  endDate: string;
+  firstTeam: WeeklyProjectionTeamResult;
+  secondTeam: WeeklyProjectionTeamResult;
+}
