@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { LeagueTeam } from "../api/leagueApi";
 import type { PlayerSeasonSummary } from "../../shared/types/playerStats";
+import type { GameStats } from "../../shared/types/stats";
 import { formatSeason } from "../../shared/season";
 import type {
   CategoryComparison,
@@ -72,12 +73,33 @@ function roundValue(value: number): string {
   return value.toFixed(1);
 }
 
-function makeBaseline(summary: PlayerSeasonSummary): Record<SummedStatKey, string> {
+function makeBaseline(
+  summary: PlayerSeasonSummary,
+  projectedStats?: GameStats,
+  requireProjection = false,
+): Record<SummedStatKey, string> {
   const blank = Object.fromEntries(editableStats.map((stat) => [stat, ""])) as Record<
     SummedStatKey,
     string
   >;
-  if (summary.statsError) return blank;
+  if (requireProjection && !projectedStats) return blank;
+  if (!projectedStats && summary.statsError) return blank;
+
+  if (projectedStats) {
+    return {
+      points: roundValue(projectedStats.points),
+      rebounds: roundValue(projectedStats.rebounds),
+      assists: roundValue(projectedStats.assists),
+      steals: roundValue(projectedStats.steals),
+      blocks: roundValue(projectedStats.blocks),
+      to: roundValue(projectedStats.to),
+      fgm: roundValue(projectedStats.fgm),
+      fga: roundValue(projectedStats.fga),
+      ftm: roundValue(projectedStats.ftm),
+      fta: roundValue(projectedStats.fta),
+      threepm: roundValue(projectedStats.threepm),
+    };
+  }
 
   const { seasonStats } = summary;
   if (seasonStats.gamesPlayed === 0) return blank;
@@ -99,8 +121,10 @@ function makeBaseline(summary: PlayerSeasonSummary): Record<SummedStatKey, strin
 function playerValues(
   summary: PlayerSeasonSummary,
   override: PlayerOverride | undefined,
+  projectedStats?: GameStats,
+  requireProjection = false,
 ): Record<SummedStatKey, string> {
-  return { ...makeBaseline(summary), ...override };
+  return { ...makeBaseline(summary, projectedStats, requireProjection), ...override };
 }
 
 function totalsForPlayers(
@@ -110,6 +134,7 @@ function totalsForPlayers(
   overrides: Overrides,
   overrideKey: (playerId: string) => string,
   scheduledGames: Map<string, number>,
+  projectedStats: Map<string, GameStats>,
 ): { totals: TeamCategoryTotals; missingPlayerIds: string[] } {
   const totals: TeamCategoryTotals = {
     fgm: 0,
@@ -135,15 +160,24 @@ function totalsForPlayers(
       missingPlayerIds.push(playerId);
       continue;
     }
-    if (summary.statsError) missingPlayerIds.push(playerId);
-    const values = playerValues(summary, overrides[overrideKey(playerId)]);
-    const games =
-      mode === "weekly"
-        ? Math.max(
-            0,
-            Number(overrides[overrideKey(playerId)]?.games ?? scheduledGames.get(playerId)) || 0,
-          )
-        : 1;
+    const playerOverride = overrides[overrideKey(playerId)];
+    const playerProjection = projectedStats.get(playerId);
+    if (!playerProjection && (summary.statsError || mode === "weekly")) {
+      missingPlayerIds.push(playerId);
+    }
+    const values = playerValues(summary, playerOverride, playerProjection, mode === "weekly");
+    let games = 1;
+    if (mode === "weekly") {
+      const gameCount = playerOverride?.games ?? scheduledGames.get(playerId);
+      if (
+        gameCount === undefined ||
+        (typeof gameCount === "string" && gameCount.trim() === "" && !scheduledGames.has(playerId))
+      ) {
+        missingPlayerIds.push(playerId);
+        continue;
+      }
+      games = Math.max(0, Number(gameCount) || 0);
+    }
     for (const stat of editableStats) {
       totals[stat] += (Number(values[stat]) || 0) * games;
     }
@@ -151,7 +185,7 @@ function totalsForPlayers(
 
   totals.fgPercentage = totals.fga > 0 ? totals.fgm / totals.fga : null;
   totals.ftPercentage = totals.fta > 0 ? totals.ftm / totals.fta : null;
-  return { totals, missingPlayerIds };
+  return { totals, missingPlayerIds: [...new Set(missingPlayerIds)] };
 }
 
 function compareTotals(
@@ -178,6 +212,7 @@ function TeamRosterEditor({
   setOverrides,
   overrideKey,
   scheduledGames,
+  projectedStats,
 }: {
   team: LeagueTeam;
   players: PlayerSeasonSummary[];
@@ -189,6 +224,7 @@ function TeamRosterEditor({
   setOverrides: Dispatch<SetStateAction<Overrides>>;
   overrideKey: (playerId: string) => string;
   scheduledGames: Map<string, number>;
+  projectedStats: Map<string, GameStats>;
 }) {
   const selected = new Set(selectedIds.filter(Boolean));
   return (
@@ -225,7 +261,12 @@ function TeamRosterEditor({
               }
               const playerId = summary.player.id;
               const key = overrideKey(playerId);
-              const values = playerValues(summary, overrides[key]);
+              const values = playerValues(
+                summary,
+                overrides[key],
+                projectedStats.get(playerId),
+                mode === "weekly",
+              );
               const defaultGames = scheduledGames.get(playerId);
               const isSelected = selected.has(playerId);
               const canSelect = selected.size < SLOT_COUNT || isSelected;
@@ -369,7 +410,17 @@ export default function SelectedRosterComparison({
       ...(weeklyProjection?.firstTeam.players ?? []),
       ...(weeklyProjection?.secondTeam.players ?? []),
     ]) {
-      byPlayer.set(player.playerId, player.scheduledGames);
+      if (player.scheduledGames !== null) byPlayer.set(player.playerId, player.scheduledGames);
+    }
+    return byPlayer;
+  }, [weeklyProjection]);
+  const projectedStats = useMemo(() => {
+    const byPlayer = new Map<string, GameStats>();
+    for (const player of [
+      ...(weeklyProjection?.firstTeam.players ?? []),
+      ...(weeklyProjection?.secondTeam.players ?? []),
+    ]) {
+      if (player.perGameStats) byPlayer.set(player.playerId, player.perGameStats);
     }
     return byPlayer;
   }, [weeklyProjection]);
@@ -381,6 +432,7 @@ export default function SelectedRosterComparison({
       overrides,
       overrideKey,
       scheduledGames,
+      projectedStats,
     );
     const second = totalsForPlayers(
       secondPlayers,
@@ -389,6 +441,7 @@ export default function SelectedRosterComparison({
       overrides,
       overrideKey,
       scheduledGames,
+      projectedStats,
     );
     const firstTeamResult: MatchupTeamResult = {
       teamId: String(firstTeam.teamId),
@@ -420,6 +473,7 @@ export default function SelectedRosterComparison({
     secondTeam,
     overrideKey,
     scheduledGames,
+    projectedStats,
   ]);
 
   function updateSelection(
@@ -442,7 +496,8 @@ export default function SelectedRosterComparison({
         <p>
           Choose up to 13 players per team. Change any value and the category score updates
           immediately. In projected weekly mode, scheduled games load automatically and can be
-          edited. Per-game stats are multiplied by GP, and FG% and FT% use makes and attempts.
+          edited. Player rates use the latest available season before the selected week; rates are
+          multiplied by GP, and FG% and FT% use makes and attempts.
         </p>
       </header>
       <div className="selected-roster-grid">
@@ -457,6 +512,7 @@ export default function SelectedRosterComparison({
           setOverrides={setOverrides}
           overrideKey={overrideKey}
           scheduledGames={scheduledGames}
+          projectedStats={projectedStats}
         />
         <TeamRosterEditor
           team={secondTeam}
@@ -469,6 +525,7 @@ export default function SelectedRosterComparison({
           setOverrides={setOverrides}
           overrideKey={overrideKey}
           scheduledGames={scheduledGames}
+          projectedStats={projectedStats}
         />
       </div>
       <SelectedCategorySummary result={comparison} mode={mode} week={week} />

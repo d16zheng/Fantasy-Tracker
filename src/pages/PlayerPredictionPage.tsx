@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { PlayerSeasonSummary } from "../../shared/types/playerStats";
+import type { ModelPredictionResult, PredictionModel } from "../../shared/types/prediction";
 import { formatSeason, getCurrentSeasonEndYear } from "../../shared/season";
 import { getRosterStats } from "../api/statsApi";
 import { getTeamScheduledGames } from "../api/matchupApi";
+import { getPlayerPrediction } from "../api/predictionApi";
 import type { League } from "../api/leagueApi";
 
 const overviewKey = "sports-tracker:league-overview";
@@ -80,10 +82,15 @@ export default function PlayerPredictionPage() {
   const [scheduledGames, setScheduledGames] = useState<number | null>(null);
   const [scheduleLoading, setScheduleLoading] = useState(false);
   const [scheduleError, setScheduleError] = useState("");
+  const [model, setModel] = useState<PredictionModel>("seasonAverage");
+  const [prediction, setPrediction] = useState<ModelPredictionResult | null>(null);
+  const [predictionLoading, setPredictionLoading] = useState(false);
+  const [predictionError, setPredictionError] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const request = useRef<AbortController | null>(null);
   const scheduleRequest = useRef<AbortController | null>(null);
+  const predictionRequest = useRef<AbortController | null>(null);
   const weeks = makeWeeks(seasonEndYear);
   const week = weeks[weekNumber - 1];
   const selectedTeam = league?.teams.find((team) => team.teamId === teamId);
@@ -92,6 +99,7 @@ export default function PlayerPredictionPage() {
     () => () => {
       request.current?.abort();
       scheduleRequest.current?.abort();
+      predictionRequest.current?.abort();
     },
     [],
   );
@@ -156,13 +164,48 @@ export default function PlayerPredictionPage() {
     return () => controller.abort();
   }, [selected, week.endDate, week.startDate]);
 
+  useEffect(() => {
+    predictionRequest.current?.abort();
+    if (!selected) {
+      setPrediction(null);
+      setPredictionError("");
+      setPredictionLoading(false);
+      return;
+    }
+    const controller = new AbortController();
+    predictionRequest.current = controller;
+    setPrediction(null);
+    setPredictionError("");
+    setPredictionLoading(true);
+    void getPlayerPrediction(
+      {
+        playerId: selected.player.id,
+        espnPlayerId: selected.player.espnId,
+        seasonEndYear,
+        model,
+        horizon: "next5",
+        asOfDate: week.startDate,
+      },
+      controller.signal,
+    )
+      .then((result) => {
+        if (!controller.signal.aborted) setPrediction(result);
+      })
+      .catch((cause: unknown) => {
+        if (!controller.signal.aborted)
+          setPredictionError(
+            cause instanceof Error ? cause.message : "Could not load the player prediction.",
+          );
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setPredictionLoading(false);
+      });
+    return () => controller.abort();
+  }, [selected, seasonEndYear, model, week.startDate]);
+
   const gameCount = scheduledGames ?? 0;
   const stats = selected?.seasonStats;
   const seasonAvailable = Boolean(stats && stats.gamesPlayed > 0 && !selected?.statsError);
-  const fgPercent =
-    seasonAvailable && stats!.fgapg > 0 ? (stats!.fgmpg / stats!.fgapg) * 100 : null;
-  const ftPercent =
-    seasonAvailable && stats!.ftapg > 0 ? (stats!.ftmpg / stats!.ftapg) * 100 : null;
 
   return (
     <main className="container">
@@ -246,6 +289,17 @@ export default function PlayerPredictionPage() {
                   ))}
                 </select>
               </label>
+              <label>
+                Prediction model
+                <select
+                  value={model}
+                  onChange={(event) => setModel(event.target.value as PredictionModel)}
+                >
+                  <option value="seasonAverage">Season average</option>
+                  <option value="recentAverage">Recent 10 games</option>
+                  <option value="weightedAverage">Weighted recent average</option>
+                </select>
+              </label>
               <button onClick={() => void loadPlayers()} disabled={loading || !teamId}>
                 {loading ? "Loading…" : players ? "Refresh player stats" : "Load players"}
               </button>
@@ -276,8 +330,9 @@ export default function PlayerPredictionPage() {
               </p>
             ) : (
               <p className="help">
-                NBA schedule: {week.startDate} through {week.endDate}. Weekly stats use the player’s
-                scheduled games and selected season averages.
+                NBA schedule: {week.startDate} through {week.endDate}. The selected model estimates
+                per-game stats from games before this week, then scales counting stats by scheduled
+                games.
               </p>
             )}
           </section>
@@ -311,9 +366,20 @@ export default function PlayerPredictionPage() {
                   {selected.statsError}
                 </p>
               )}
-              {!seasonAvailable ? (
+              {predictionError && (
+                <p className="error" role="alert">
+                  {predictionError}
+                </p>
+              )}
+              {predictionLoading ? (
+                <p className="empty-state" aria-live="polite">
+                  Loading prediction…
+                </p>
+              ) : !prediction ? (
                 <p className="empty-state">
-                  No season average data is available for this player and season yet.
+                  {seasonAvailable
+                    ? "A model prediction is not available yet."
+                    : "No historical game data is available for this player before the selected week."}
                 </p>
               ) : (
                 <div className="table-scroll">
@@ -321,28 +387,64 @@ export default function PlayerPredictionPage() {
                     <thead>
                       <tr>
                         <th>Stat</th>
-                        <th>Per-game average</th>
+                        <th>Predicted per game</th>
                         <th>Projected for week</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <StatProjection label="PTS" perGame={stats!.ppg} games={gameCount} />
-                      <StatProjection label="REB" perGame={stats!.rpg} games={gameCount} />
-                      <StatProjection label="AST" perGame={stats!.apg} games={gameCount} />
-                      <StatProjection label="STL" perGame={stats!.spg} games={gameCount} />
-                      <StatProjection label="BLK" perGame={stats!.bpg} games={gameCount} />
-                      <StatProjection label="TO" perGame={stats!.topg} games={gameCount} />
-                      <StatProjection label="3PM" perGame={stats!.threepmpg} games={gameCount} />
+                      <StatProjection
+                        label="PTS"
+                        perGame={prediction.predictedStats.points}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="REB"
+                        perGame={prediction.predictedStats.rebounds}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="AST"
+                        perGame={prediction.predictedStats.assists}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="STL"
+                        perGame={prediction.predictedStats.steals}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="BLK"
+                        perGame={prediction.predictedStats.blocks}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="TO"
+                        perGame={prediction.predictedStats.to}
+                        games={gameCount}
+                      />
+                      <StatProjection
+                        label="3PM"
+                        perGame={prediction.predictedStats.threepm}
+                        games={gameCount}
+                      />
                       <StatProjection
                         label="FG%"
-                        perGame={fgPercent}
+                        perGame={
+                          prediction.predictedStats.fga > 0
+                            ? (prediction.predictedStats.fgm / prediction.predictedStats.fga) * 100
+                            : null
+                        }
                         games={gameCount}
                         multiply={false}
                         percent
                       />
                       <StatProjection
                         label="FT%"
-                        perGame={ftPercent}
+                        perGame={
+                          prediction.predictedStats.fta > 0
+                            ? (prediction.predictedStats.ftm / prediction.predictedStats.fta) * 100
+                            : null
+                        }
                         games={gameCount}
                         multiply={false}
                         percent

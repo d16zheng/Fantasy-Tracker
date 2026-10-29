@@ -1,3 +1,5 @@
+import type { GameStats } from "./stats";
+
 export interface ComparisonRequest {
   leagueId: string;
   firstTeamId: string;
@@ -79,12 +81,18 @@ export interface MatchupResult extends ComparisonResult {
 
 export interface PlayerWeeklyProjection {
   playerId: string;
-  nbaTeam: string;
-  scheduledGames: number;
+  nbaTeam: string | null;
+  scheduledGames: number | null;
+  statsSeasonEndYear: number | null;
+  perGameStats: GameStats | null;
+  projectedStats: GameStats | null;
+  statsAvailable: boolean;
+  scheduleAvailable: boolean;
 }
 
 export interface WeeklyProjectionTeamResult extends MatchupTeamResult {
   players: PlayerWeeklyProjection[];
+  missingSchedulePlayerIds: string[];
 }
 
 export interface WeeklyProjectionResult extends ComparisonResult {

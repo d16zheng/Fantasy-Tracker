@@ -88,6 +88,7 @@ function MatchupSummary({
   const categories = Object.keys(labels) as MatchupCategory[];
   const firstWins = result.categories.filter(({ winner }) => winner === "win").length;
   const secondWins = result.categories.filter(({ winner }) => winner === "lose").length;
+  const ties = result.categories.filter(({ winner }) => winner === "tie").length;
   const categoryResult = new Map(
     result.categories.map(({ category, winner }) => [category, winner]),
   );
@@ -110,10 +111,19 @@ function MatchupSummary({
         <strong>
           {result.firstTeam.name} {firstWins}
         </strong>
-        <span>—</span>
+        <span>
+          {ties} {ties === 1 ? "tie" : "ties"}
+        </span>
         <strong>
           {secondWins} {result.secondTeam.name}
         </strong>
+      </p>
+      <p className="help matchup-outcome">
+        {firstWins >= 5
+          ? `${result.firstTeam.name} is projected to win at least 5 categories.`
+          : secondWins >= 5
+            ? `${result.secondTeam.name} is projected to win at least 5 categories.`
+            : "Neither team is projected to reach 5 category wins."}
       </p>
       <div className="table-scroll">
         <table className="matchup-table">
@@ -145,16 +155,28 @@ function MatchupSummary({
         </table>
       </div>
       {weeklyProjection && (
-        <p className="help">Weekly totals use ESPN’s scheduled games for each player’s NBA team.</p>
+        <p className="help">
+          Weekly totals use each player’s most recent regular-season history before the week and
+          ESPN’s scheduled games. FG% and FT% use team makes and attempts.
+        </p>
       )}
       {(result.firstTeam.missingPlayerIds.length > 0 ||
         result.secondTeam.missingPlayerIds.length > 0) && (
         <p className="help">
-          Unavailable player logs: {result.firstTeam.name} (
+          Players with unavailable stats are excluded: {result.firstTeam.name} (
           {result.firstTeam.missingPlayerIds.length}), {result.secondTeam.name} (
           {result.secondTeam.missingPlayerIds.length}).
         </p>
       )}
+      {weeklyProjection &&
+        (weeklyProjection.firstTeam.missingSchedulePlayerIds.length > 0 ||
+          weeklyProjection.secondTeam.missingSchedulePlayerIds.length > 0) && (
+          <p className="help">
+            Players without a recognized NBA team and schedule are excluded: {result.firstTeam.name}{" "}
+            ({weeklyProjection.firstTeam.missingSchedulePlayerIds.length}), {result.secondTeam.name}{" "}
+            ({weeklyProjection.secondTeam.missingSchedulePlayerIds.length}).
+          </p>
+        )}
     </section>
   );
 }
